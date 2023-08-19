@@ -14,6 +14,7 @@ import Icons from '../Assets/icons';
 import CustomHeader from '../Components/CustomHeader';
 import TabNav from './TabNav';
 import Price from '../Screens/Price';
+import HelpFeedback from '../Screens/HelpFeedback';
 
 const Nav = ({navigation}) => {
   const Stack = createNativeStackNavigator();
@@ -31,20 +32,21 @@ const Nav = ({navigation}) => {
           name="Login"
           component={Login}
           options={{
-            headerTitle: () => <CustomHeader />,
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="SignUp"
           component={SignUp}
           options={{
-            headerTitle: () => <CustomHeader />,
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="Tab"
           component={TabNav}
           options={{
+            headerBackVisible: false,
             headerTitle: () => <CustomHeader />,
           }}
           // options={({route}) => ({
@@ -62,6 +64,7 @@ const Nav = ({navigation}) => {
           name="Price"
           component={Price}
           options={{
+            headerBackVisible: false,
             headerTitle: () => <CustomHeader />,
           }}
         />
@@ -69,6 +72,7 @@ const Nav = ({navigation}) => {
           name="DryClean"
           component={DryClean}
           options={{
+            headerBackVisible: false,
             headerTitle: () => <CustomHeader />,
           }}
         />
@@ -76,6 +80,7 @@ const Nav = ({navigation}) => {
           name="Loundary"
           component={Loundary_Wash}
           options={{
+            headerBackVisible: false,
             headerTitle: () => <CustomHeader />,
           }}
         />
@@ -83,6 +88,7 @@ const Nav = ({navigation}) => {
           name="Bedding"
           component={Home_Bedding}
           options={{
+            headerBackVisible: false,
             headerTitle: () => <CustomHeader />,
           }}
         />
@@ -90,7 +96,16 @@ const Nav = ({navigation}) => {
           name="ShirtService"
           component={ShirtService}
           options={{
+            headerBackVisible: false,
             headerTitle: () => <CustomHeader />,
+          }}
+        />
+        <Stack.Screen
+          name="HelpFeedback"
+          component={HelpFeedback}
+          options={{
+            title: 'Help & Feedback',
+            // headerTitle: () => <CustomHeader />,
           }}
         />
       </Stack.Navigator>

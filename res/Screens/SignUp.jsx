@@ -4,8 +4,10 @@ import {
   Button,
   Checkbox,
   FormControl,
+  HStack,
   Heading,
   Icon,
+  Image,
   Input,
   Link,
   ScrollView,
@@ -13,36 +15,49 @@ import {
   Text,
 } from 'native-base';
 import colors from '../Assets/colors';
-import Icons from 'react-native-vector-icons/FontAwesome6';
+import Icons from 'react-native-vector-icons/Ionicons';
 import {NavigationContainer} from '@react-navigation/native';
 
 const SignUp = ({navigation}) => {
   return (
-    <Box h="100%" w="100%">
-      <Box m={5}>
-        <Heading size="xl">Welcome</Heading>
-        <Text fontSize="lg">Let's get the key details for your booking</Text>
-      </Box>
+    <Box h="100%" w="100%" bgColor={colors.white}>
       <ScrollView>
-        <Box
-          backgroundColor="white"
-          // h="330px"
-          w="90%"
-          my={3}
-          alignSelf="center"
-          borderRadius="md"
-          shadow={3}>
+        <Box mx={10}>
+          <HStack>
+            <Image
+              source={require('../Assets/Logo.png')}
+              alt="img"
+              size="lg"
+              w="20%"
+              resizeMode="contain"
+            />
+            <Heading alignSelf="center" marginTop={3} mx={3}>
+              Supreme
+            </Heading>
+          </HStack>
+          <HStack>
+            <Icons name="arrow-back" color={colors.primary} size={22} />
+            <Text mx={1} color={colors.primary}>
+              Back
+            </Text>
+          </HStack>
+          <Box marginBottom={2}>
+            <Heading size="2xl">Welcome</Heading>
+            <Text fontSize="lg" fontWeight="bold">
+              Let's get the key details for your booking
+            </Text>
+          </Box>
           <FormControl>
-            <Stack my={4} w="80%" alignSelf="center">
-              <FormControl.Label
-                _text={{fontSize: 'xl', fontWeight: 'light', color: 'black'}}>
+            <Stack>
+              <FormControl.Label _text={{fontSize: 'xl', fontWeight: 'light'}}>
                 First Name
               </FormControl.Label>
               <Input
+                focusOutlineColor={colors.white}
+                backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
                 borderLeftWidth={0}
-                borderColor="black"
                 type="text"
                 fontSize="lg"
               />
@@ -52,31 +67,35 @@ const SignUp = ({navigation}) => {
                 First Name is required
               </FormControl.ErrorMessage>
               <FormControl.Label
-                _text={{fontSize: 'xl', fontWeight: 'light', color: 'black'}}>
-                Last Name
+                marginTop={5}
+                _text={{fontSize: 'xl', fontWeight: 'light'}}>
+                Surname
               </FormControl.Label>
               <Input
+                focusOutlineColor={colors.white}
+                backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
                 borderLeftWidth={0}
-                borderColor="black"
                 type="text"
                 fontSize="lg"
               />
               <FormControl.ErrorMessage
               // leftIcon={<WarningOutlineIcon size="xs" />}
               >
-                Last Name is required
+                Surname is required
               </FormControl.ErrorMessage>
               <FormControl.Label
-                _text={{fontSize: 'xl', fontWeight: 'light', color: 'black'}}>
+                marginTop={5}
+                _text={{fontSize: 'xl', fontWeight: 'light'}}>
                 Mobile Phone
               </FormControl.Label>
               <Input
+                focusOutlineColor={colors.white}
+                backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
                 borderLeftWidth={0}
-                borderColor="black"
                 type="text"
                 fontSize="lg"
               />
@@ -86,14 +105,16 @@ const SignUp = ({navigation}) => {
                 Mobile phone is required
               </FormControl.ErrorMessage>
               <FormControl.Label
-                _text={{fontSize: 'xl', fontWeight: 'light', color: 'black'}}>
+                marginTop={5}
+                _text={{fontSize: 'xl', fontWeight: 'light'}}>
                 Email
               </FormControl.Label>
               <Input
+                focusOutlineColor={colors.white}
+                backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
                 borderLeftWidth={0}
-                borderColor="black"
                 type="text"
                 fontSize="lg"
               />
@@ -103,15 +124,16 @@ const SignUp = ({navigation}) => {
                 Email is required
               </FormControl.ErrorMessage>
               <FormControl.Label
-                my={4}
-                _text={{fontSize: 'xl', fontWeight: 'light', color: 'black'}}>
+                marginTop={5}
+                _text={{fontSize: 'xl', fontWeight: 'light'}}>
                 Create Password
               </FormControl.Label>
               <Input
+                focusOutlineColor={colors.white}
+                backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
                 borderLeftWidth={0}
-                borderColor="black"
                 type="password"
                 fontSize="lg"
               />
@@ -120,9 +142,13 @@ const SignUp = ({navigation}) => {
               >
                 Password is required
               </FormControl.ErrorMessage>
-              <Text fontSize="md" my={2}>
-                Already have an account?
+              <HStack>
+                <Text fontSize="md" my={4}>
+                  Already have an account?
+                </Text>
                 <Link
+                  alignSelf="center"
+                  mx={2}
                   onPress={() => {
                     navigation.navigate('Login');
                   }}
@@ -132,14 +158,14 @@ const SignUp = ({navigation}) => {
                   }}>
                   Login
                 </Link>
-              </Text>
+              </HStack>
               <Checkbox colorScheme="green" borderColor={colors.primary} my={3}>
                 I accept Supreme's
                 <Link
                   onPress={() => {
                     navigation.navigate('Login');
                   }}
-                  w="40%"
+                  // w="40%"
                   _text={{
                     fontSize: 'md',
                     color: colors.primary,
@@ -153,7 +179,6 @@ const SignUp = ({navigation}) => {
                   onPress={() => {
                     navigation.navigate('Login');
                   }}
-                  w="40%"
                   _text={{
                     fontSize: 'md',
                     color: colors.primary,
@@ -169,16 +194,17 @@ const SignUp = ({navigation}) => {
             </Stack>
           </FormControl>
           <Button
+            onPress={() => {
+              navigation.navigate('Tab');
+            }}
             endIcon={
-              <Icon as={Icons} name="arrow-right" size="lg" color="white" />
+              <Icons name="arrow-forward" color={colors.white} size={25} />
             }
-            w="50%"
             _text={{fontSize: '2xl'}}
-            backgroundColor={colors.gray}
-            borderRightRadius={0}
-            borderLeftRadius={7}
-            my={8}
-            alignSelf="flex-end">
+            shadow={5}
+            backgroundColor={colors.darkgrey}
+            borderRadius={7}
+            my={8}>
             Continue
           </Button>
         </Box>

@@ -1,9 +1,9 @@
 import {TouchableOpacity} from 'react-native';
 import React from 'react';
 import colors from '../Assets/colors';
-import {HStack, Text} from 'native-base';
+import {HStack, Pressable, Text} from 'native-base';
 // import Icons from '../Assets/icons';
-import Icons from 'react-native-vector-icons/EvilIcons';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const WelcomeCard = ({
   onPress,
@@ -14,24 +14,24 @@ const WelcomeCard = ({
   bgColor,
 }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <Pressable onPress={onPress}>
       <HStack
         backgroundColor={bgColor}
-        h="80px"
+        h="90px"
         w="90%"
         my={3}
-        borderRadius={5}
-        shadow={9}
+        borderRadius={8}
+        shadow={5}
         alignItems="center"
-        justifyContent="space-evenly"
+        justifyContent="space-around"
         alignSelf="center">
         <Icons name={icon1Name} size={35} color={textColor} />
         <Text fontSize="xl" color={textColor}>
           {title}
         </Text>
-        <Icons name={icon2Name} size={35} color={textColor} />
+        <Icons name={icon2Name} size={25} color={textColor} />
       </HStack>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

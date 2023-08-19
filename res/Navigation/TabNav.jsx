@@ -1,6 +1,7 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import Icons from 'react-native-vector-icons/FontAwesome6';
+import Icons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from '../Screens/Home';
 import MyOrders from '../Screens/MyOrders';
 import Bookings from '../Screens/Bookings';
@@ -24,7 +25,7 @@ const TabNav = () => {
         options={({route}) => ({
           title: 'Home',
           tabBarIcon: ({color}) => (
-            <Icons name="house" color={color} size={25} resizeMode="contain" />
+            <Icons name="home-outline" color={color} size={25} />
           ),
         })}
       />
@@ -33,7 +34,7 @@ const TabNav = () => {
         component={MyOrders}
         options={{
           tabBarIcon: ({color}) => (
-            <Icons name="file-lines" color={color} size={25} />
+            <Icons name="document-text-outline" color={color} size={25} />
           ),
         }}
       />
@@ -42,7 +43,7 @@ const TabNav = () => {
         component={Bookings}
         options={{
           tabBarIcon: ({color}) => (
-            <Icons name="truck-fast" color={color} size={25} />
+            <FontAwesome name="truck-outline" color={color} size={25} />
           ),
         }}
       />
@@ -50,8 +51,9 @@ const TabNav = () => {
         name="Profile"
         component={Profile}
         options={{
+          title: 'More',
           tabBarIcon: ({color}) => (
-            <Icons name="ellipsis" color={color} size={25} />
+            <Icons name="ellipsis-horizontal-outline" color={color} size={25} />
           ),
         }}
       />

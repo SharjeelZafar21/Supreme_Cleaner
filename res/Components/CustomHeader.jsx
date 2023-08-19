@@ -8,7 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 const CustomHeader = () => {
   const navigation = useNavigation();
   return (
-    <HStack alignItems="center" space="1/3">
+    <HStack alignItems="center" space="1/2">
       <Logo />
       <HStack alignItems="center" marginLeft={8}>
         <Image

@@ -32,7 +32,7 @@ const Welcome = ({navigation}) => {
           your postcode by hitting « Check postcode » below.
         </Text>
         <Button
-          backgroundColor={colors.gray}
+          backgroundColor={colors.darkgrey}
           onPress={() => {
             navigation.navigate('Login');
           }}
