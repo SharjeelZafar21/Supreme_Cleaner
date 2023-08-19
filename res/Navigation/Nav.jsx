@@ -1,18 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {
-  Box,
-  Button,
-  HStack,
-  Heading,
-  Icon,
-  Link,
-  NativeBaseProvider,
-  StatusBar,
-  Text,
-} from 'native-base';
 import React from 'react';
-import Home from '../Screens/Home';
 import DryClean from '../Screens/DryClean';
 import Loundary_Wash from '../Screens/Loundary_Wash';
 import Home_Bedding from '../Screens/Home_Bedding';
@@ -23,6 +11,9 @@ import Login from '../Screens/Login';
 import SignUp from '../Screens/SignUp';
 import Logo from '../Components/Logo';
 import Icons from '../Assets/icons';
+import CustomHeader from '../Components/CustomHeader';
+import TabNav from './TabNav';
+import Price from '../Screens/Price';
 
 const Nav = ({navigation}) => {
   const Stack = createNativeStackNavigator();
@@ -33,101 +24,73 @@ const Nav = ({navigation}) => {
           name="Welocme"
           component={Welcome}
           options={{
-            headerTitle: () => (
-              <HStack alignItems="center">
-                <HStack alignItems="center">
-                  <Logo />
-                  <Heading mx={3} marginTop={3}>
-                    Supreme
-                  </Heading>
-                </HStack>
-                <HStack alignItems="center">
-                  <Icon as={Icons} name="logo-usd" size="xl" />
-                  <Link>Prices</Link>
-                </HStack>
-              </HStack>
-            ),
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="Login"
           component={Login}
           options={{
-            headerTitle: () => (
-              <HStack alignItems="center">
-                <HStack alignItems="center">
-                  <Logo />
-                  <Heading mx={3} marginTop={3}>
-                    Supreme
-                  </Heading>
-                </HStack>
-                <HStack mx={10} alignSelf="center" my={3}>
-                  <Icon as={Icons} name="logo-usd" size="xl" />
-                  <Link>Prices</Link>
-                </HStack>
-              </HStack>
-            ),
+            headerTitle: () => <CustomHeader />,
           }}
         />
         <Stack.Screen
           name="SignUp"
           component={SignUp}
           options={{
-            headerTitle: () => (
-              <HStack alignItems="center">
-                <HStack alignItems="center">
-                  <Logo />
-                  <Heading mx={3} marginTop={3}>
-                    Supreme
-                  </Heading>
-                </HStack>
-                <HStack alignItems="center">
-                  <Icon as={Icons} name="logo-usd" size="xl" />
-                  <Link>Prices</Link>
-                </HStack>
-              </HStack>
-            ),
+            headerTitle: () => <CustomHeader />,
           }}
         />
         <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{headerShown: false}}
+          name="Tab"
+          component={TabNav}
+          options={{
+            headerTitle: () => <CustomHeader />,
+          }}
+          // options={({route}) => ({
+          //   // headerTitle: getHeaderTitle(route),
+          //   headerTitleAlign: 'center',
+          //   // headerTintColor: colors.white,
+          //   headerShadowVisible: false,
+          //   headerStyle: {
+          //     backgroundColor: colors.primary,
+          //     fontFamily: 'Poppins-Regular',
+          //   },
+          // })}
+        />
+        <Stack.Screen
+          name="Price"
+          component={Price}
+          options={{
+            headerTitle: () => <CustomHeader />,
+          }}
         />
         <Stack.Screen
           name="DryClean"
           component={DryClean}
           options={{
-            title: 'Dry Clean',
-            headerStyle: {backgroundColor: colors.primary},
-            headerTintColor: 'white',
+            headerTitle: () => <CustomHeader />,
           }}
         />
         <Stack.Screen
           name="Loundary"
           component={Loundary_Wash}
           options={{
-            title: 'Loundary Wash & Fold',
-            headerStyle: {backgroundColor: colors.primary},
-            headerTintColor: 'white',
+            headerTitle: () => <CustomHeader />,
           }}
         />
         <Stack.Screen
           name="Bedding"
           component={Home_Bedding}
           options={{
-            title: 'Home & Bedding',
-            headerStyle: {backgroundColor: colors.primary},
-            headerTintColor: 'white',
+            headerTitle: () => <CustomHeader />,
           }}
         />
         <Stack.Screen
           name="ShirtService"
           component={ShirtService}
           options={{
-            title: 'Shirt Service',
-            headerStyle: {backgroundColor: colors.primary},
-            headerTintColor: 'white',
+            headerTitle: () => <CustomHeader />,
           }}
         />
       </Stack.Navigator>

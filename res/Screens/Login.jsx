@@ -11,9 +11,9 @@ import {
   Text,
 } from 'native-base';
 import colors from '../Assets/colors';
-import Icons from 'react-native-vector-icons/FontAwesome6';
+import Icons from 'react-native-vector-icons/Ionicons';
 
-const Login = () => {
+const Login = ({navigation}) => {
   return (
     <Box h="100%" w="100%">
       <Box m={5}>
@@ -71,8 +71,11 @@ const Login = () => {
           </Stack>
         </FormControl>
         <Button
+          onPress={() => {
+            navigation.navigate('Tab');
+          }}
           endIcon={
-            <Icon as={Icons} name="arrow-right" size="lg" color="white" />
+            <Icons name="arrow-forward" color={colors.white} size={25} />
           }
           w="50%"
           _text={{fontSize: '2xl'}}

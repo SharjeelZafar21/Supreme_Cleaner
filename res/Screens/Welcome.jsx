@@ -1,23 +1,32 @@
 import React from 'react';
-import {Box, Button, Heading, Image, Text} from 'native-base';
+import {Box, Button, HStack, Heading, Image, Text} from 'native-base';
 import colors from '../Assets/colors';
 
 const Welcome = ({navigation}) => {
   return (
     <Box h="100%" w="100%" backgroundColor="white">
-      <Box h="50%" w="100%">
+      <HStack h="45%" w="100%">
+        <Image
+          source={require('../Assets/Logo.png')}
+          alt="img"
+          size="lg"
+          w="20%"
+          resizeMode="contain"
+          m={2}
+        />
         <Image
           source={require('../Assets/welcome.jpg')}
           alt="img"
           h="100%"
+          w="80%"
           resizeMode="contain"
         />
-      </Box>
-      <Box m={5}>
+      </HStack>
+      <Box w="70%" alignSelf="center" h="55%" my={10}>
         <Heading size="xl" fontWeight="extrabold">
           Welcome!
         </Heading>
-        <Text fontSize="lg">
+        <Text fontSize="md">
           If you already have an account, please sign in. Don't have an account
           yet? We need to check if you are in our delivery area, so please check
           your postcode by hitting « Check postcode » below.
