@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Box,
   Button,
@@ -9,14 +9,60 @@ import {
   Image,
   Input,
   Link,
+  Pressable,
   ScrollView,
   Stack,
   Text,
 } from 'native-base';
 import colors from '../Assets/colors';
 import Icons from 'react-native-vector-icons/Ionicons';
+import {useSelector, useDispatch} from 'react-redux';
+import {LoginAction} from '../Redux/Actions';
 
 const Login = ({navigation}) => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [emailError, setEmailError] = useState();
+  const [passwordError, setPasswordError] = useState();
+  const userData = useSelector(state => state.userStatus.user);
+  console.log('user data ', userData);
+  const dispatch = useDispatch();
+  const validateEmail = () => {
+    if (!email) {
+      setEmailError('Email is required');
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      setEmailError('Invalid email address');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const validatePassword = () => {
+    if (!password) {
+      setPasswordError('Password is required');
+    } else if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters');
+    } else {
+      setPasswordError('');
+    }
+  };
+
+  const data = JSON.stringify({email: email, password: password});
+
+  const handleSignIn = async () => {
+    validateEmail();
+    validatePassword();
+    console.log(emailError);
+    console.log(passwordError);
+
+    if (!emailError && !passwordError) {
+      await dispatch(LoginAction(data));
+      navigation.navigate('Tab');
+    }
+  };
+  const handleBack = () => {
+    navigation.goBack(); // Navigate back to the previous screen
+  };
   return (
     <Box h="100%" w="100%" bgColor={colors.white}>
       <ScrollView>
@@ -33,12 +79,14 @@ const Login = ({navigation}) => {
               Supreme
             </Heading>
           </HStack>
-          <HStack>
-            <Icons name="arrow-back" color={colors.primary} size={22} />
-            <Text mx={1} color={colors.primary}>
-              Back
-            </Text>
-          </HStack>
+          <Pressable onPress={handleBack}>
+            <HStack>
+              <Icons name="arrow-back" color={colors.primary} size={22} />
+              <Text mx={1} color={colors.primary}>
+                Back
+              </Text>
+            </HStack>
+          </Pressable>
           <Box marginBottom={8}>
             <Heading size="2xl">Welcome</Heading>
             <Text fontSize="lg" fontWeight="bold">
@@ -59,12 +107,17 @@ const Login = ({navigation}) => {
                 borderLeftWidth={0}
                 type="text"
                 fontSize="lg"
+                value={email}
+                onChangeText={text => setEmail(text)}
+                onBlur={validateEmail}
               />
-              <FormControl.ErrorMessage
-              // leftIcon={<WarningOutlineIcon size="xs" />}
-              >
-                Email is required
-              </FormControl.ErrorMessage>
+              {emailError ? (
+                <FormControl.HelperText
+                  alignSelf="flex-end"
+                  _text={{color: colors.red}}>
+                  {emailError}
+                </FormControl.HelperText>
+              ) : null}
               <FormControl.Label
                 marginTop={20}
                 _text={{fontSize: 'xl', fontWeight: 'light', color: 'black'}}>
@@ -78,12 +131,17 @@ const Login = ({navigation}) => {
                 borderLeftWidth={0}
                 type="password"
                 fontSize="lg"
+                value={password}
+                onChangeText={text => setPassword(text)}
+                onBlur={validatePassword}
               />
-              <FormControl.ErrorMessage
-              // leftIcon={<WarningOutlineIcon size="xs" />}
-              >
-                Password is required
-              </FormControl.ErrorMessage>
+              {passwordError ? (
+                <FormControl.HelperText
+                  alignSelf="flex-end"
+                  _text={{color: colors.red}}>
+                  {passwordError}
+                </FormControl.HelperText>
+              ) : null}
               <Link
                 _text={{fontSize: 'md', color: colors.primary}}
                 marginTop={8}>
@@ -92,9 +150,7 @@ const Login = ({navigation}) => {
             </Stack>
           </FormControl>
           <Button
-            onPress={() => {
-              navigation.navigate('Tab');
-            }}
+            onPress={handleSignIn}
             endIcon={
               <Icons name="arrow-forward" color={colors.white} size={25} />
             }

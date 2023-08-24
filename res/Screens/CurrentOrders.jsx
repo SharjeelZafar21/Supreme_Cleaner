@@ -1,8 +1,16 @@
 import {Box, Heading} from 'native-base';
-import React from 'react';
+import React, {useEffect} from 'react';
 import colors from '../Assets/colors';
+import {useDispatch, useSelector} from 'react-redux';
+import {ordersAction} from '../Redux/Actions';
 
 const CurrentOrders = () => {
+  const orders = useSelector(state => state.orders.orders);
+  const dispatch = useDispatch();
+  console.log('orders in current', orders);
+  useEffect(() => {
+    dispatch(ordersAction());
+  }, []);
   return (
     <Box
       backgroundColor={colors.white}

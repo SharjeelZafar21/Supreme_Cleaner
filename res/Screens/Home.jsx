@@ -19,55 +19,57 @@ import {ImageBackground} from 'react-native';
 const Home = ({navigation}) => {
   return (
     <Box backgroundColor={colors.white} h="100%" w="100%">
-      <Box m={5}>
+      {/* <ScrollView> */}
+      <Box h="10%" m={5}>
         <Heading fontSize="4xl">Welcome Numan,</Heading>
         <Text fontSize="lg" color={colors.darkgrey}>
           What can we do for you today?
         </Text>
       </Box>
-      <ScrollView>
-        <Box h="35%" w="95%" justifyContent="center" alignSelf="center" my={5}>
-          <Image
-            borderRadius={20}
-            source={require('../Assets/home.png')}
-            h="100%"
-            w="100%"
-            resizeMode="stretch"
-            position="absolute"
-          />
-          <Box position="relative">
-            <Box
-              w="55%"
-              h="60%"
-              alignSelf="flex-end"
-              justifyContent="center"
-              mx={8}>
-              <Heading color={colors.darkgrey} fontSize="2xl">
-                DRESS TO ALTER?
-              </Heading>
-              <Text color={colors.darkgrey} fontSize="md">
-                Book your fitting appointment online
-              </Text>
-            </Box>
-            <Button
-              // onPress={() => {
-              //   navigation.navigate('Tab');
-              // }}
-              endIcon={
-                <Icons name="arrow-forward" color={colors.white} size={20} />
-              }
-              w="35%"
-              h="40px"
-              _text={{fontSize: 'md'}}
-              backgroundColor={colors.darkgrey}
-              borderRightRadius={0}
-              borderLeftRadius={10}
-              my={2}
-              alignSelf="flex-end">
-              Book Now
-            </Button>
+      <Box h="25%" w="95%" justifyContent="center" alignSelf="center" my={5}>
+        <Image
+          alt="img"
+          borderRadius={20}
+          source={require('../Assets/home.png')}
+          h="100%"
+          w="100%"
+          resizeMode="stretch"
+          position="absolute"
+        />
+        <Box position="relative">
+          <Box
+            w="55%"
+            h="60%"
+            alignSelf="flex-end"
+            justifyContent="center"
+            mx={8}>
+            <Heading color={colors.darkgrey} fontSize="2xl">
+              DRESS TO ALTER?
+            </Heading>
+            <Text color={colors.darkgrey} fontSize="md">
+              Book your fitting appointment online
+            </Text>
           </Box>
+          <Button
+            // onPress={() => {
+            //   navigation.navigate('Tab');
+            // }}
+            endIcon={
+              <Icons name="arrow-forward" color={colors.white} size={20} />
+            }
+            w="35%"
+            h="40px"
+            _text={{fontSize: 'md'}}
+            backgroundColor={colors.darkgrey}
+            borderRightRadius={0}
+            borderLeftRadius={10}
+            my={2}
+            alignSelf="flex-end">
+            Book Now
+          </Button>
         </Box>
+      </Box>
+      <Box h="65%">
         <WelcomeCard
           textColor={colors.black}
           bgColor={colors.white}
@@ -98,7 +100,8 @@ const Home = ({navigation}) => {
           icon1Name="truck-cargo-container"
           icon2Name="arrow-right"
         />
-      </ScrollView>
+      </Box>
+      {/* </ScrollView> */}
     </Box>
   );
 };

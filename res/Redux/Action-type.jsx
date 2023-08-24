@@ -1,0 +1,11 @@
+export const actionTypes = {
+  LOGIN: 'LOGIN',
+  LOGOUT: 'LOGOUT',
+  LOGOUTERR: 'LOGOUTERR',
+  SIGNUP: 'SIGNUP',
+  SIGNUPERR: 'SIGNUPERR',
+  LOGINERR: 'LOGINERR',
+  ERR: 'ERR',
+  ORDER: 'ORDER',
+  ORDERERR: 'ORDERERR',
+};

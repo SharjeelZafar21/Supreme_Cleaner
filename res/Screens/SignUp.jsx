@@ -10,6 +10,7 @@ import {
   Image,
   Input,
   Link,
+  Pressable,
   ScrollView,
   Stack,
   Text,
@@ -19,6 +20,9 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import {NavigationContainer} from '@react-navigation/native';
 
 const SignUp = ({navigation}) => {
+  const handleBack = () => {
+    navigation.goBack(); // Navigate back to the previous screen
+  };
   return (
     <Box h="100%" w="100%" bgColor={colors.white}>
       <ScrollView>
@@ -35,12 +39,14 @@ const SignUp = ({navigation}) => {
               Supreme
             </Heading>
           </HStack>
-          <HStack>
-            <Icons name="arrow-back" color={colors.primary} size={22} />
-            <Text mx={1} color={colors.primary}>
-              Back
-            </Text>
-          </HStack>
+          <Pressable onPress={handleBack}>
+            <HStack>
+              <Icons name="arrow-back" color={colors.primary} size={22} />
+              <Text mx={1} color={colors.primary}>
+                Back
+              </Text>
+            </HStack>
+          </Pressable>
           <Box marginBottom={2}>
             <Heading size="2xl">Welcome</Heading>
             <Text fontSize="lg" fontWeight="bold">
