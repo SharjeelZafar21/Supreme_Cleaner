@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Box,
   Button,
@@ -18,8 +18,99 @@ import {
 import colors from '../Assets/colors';
 import Icons from 'react-native-vector-icons/Ionicons';
 import {NavigationContainer} from '@react-navigation/native';
+import {SignUpAction} from '../Redux/Actions';
+import {useDispatch} from 'react-redux';
 
 const SignUp = ({navigation}) => {
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [mobilePhone, setMobilePhone] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const [firstNameError, setFirstNameError] = useState();
+  const [lastNameError, setLastNameError] = useState();
+  const [mobilePhoneError, setMobilePhoneError] = useState();
+  const [emailError, setEmailError] = useState();
+  const [passwordError, setPasswordError] = useState();
+
+  const dispatch = useDispatch();
+
+  const validateFirstName = () => {
+    if (!firstName) {
+      setFirstNameError('First Name is required');
+    } else {
+      setFirstNameError('');
+    }
+  };
+
+  const validateLastName = () => {
+    if (!lastName) {
+      setLastNameError('Last Name is required');
+    } else {
+      setLastNameError('');
+    }
+  };
+
+  const validateMobilePhone = () => {
+    if (!mobilePhone) {
+      setMobilePhoneError('Mobile Phone is required');
+    } else {
+      setMobilePhoneError('');
+    }
+  };
+
+  const validateEmail = () => {
+    if (!email) {
+      setEmailError('Email is required');
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      setEmailError('Invalid email format');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const validatePassword = () => {
+    if (!password) {
+      setPasswordError('Password is required');
+    } else if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters');
+    } else {
+      setPasswordError('');
+    }
+  };
+
+  const validateForm = () => {
+    validateFirstName();
+    validateLastName();
+    validateMobilePhone();
+    validateEmail();
+    validatePassword();
+  };
+
+  const data = JSON.stringify({
+    email: email,
+    password: password,
+    username: lastName,
+    // role: 'user',
+  });
+
+  const handleSignUp = async () => {
+    validateForm();
+
+    // If all fields are valid, proceed with sign-up logic
+    if (
+      !firstNameError &&
+      !lastNameError &&
+      !mobilePhoneError &&
+      !emailError &&
+      !passwordError
+    ) {
+      // Perform sign-up logic
+      await dispatch(SignUpAction(data));
+      navigation.navigate('Login');
+    }
+  };
   const handleBack = () => {
     navigation.goBack(); // Navigate back to the previous screen
   };
@@ -66,12 +157,17 @@ const SignUp = ({navigation}) => {
                 borderLeftWidth={0}
                 type="text"
                 fontSize="lg"
+                value={firstName}
+                onChangeText={text => setFirstName(text)}
+                onBlur={validateFirstName}
               />
-              <FormControl.ErrorMessage
-              // leftIcon={<WarningOutlineIcon size="xs" />}
-              >
-                First Name is required
-              </FormControl.ErrorMessage>
+              {firstNameError ? (
+                <FormControl.HelperText
+                  alignSelf="flex-end"
+                  _text={{color: colors.red}}>
+                  {firstNameError}
+                </FormControl.HelperText>
+              ) : null}
               <FormControl.Label
                 marginTop={5}
                 _text={{fontSize: 'xl', fontWeight: 'light'}}>
@@ -85,12 +181,17 @@ const SignUp = ({navigation}) => {
                 borderLeftWidth={0}
                 type="text"
                 fontSize="lg"
+                value={lastName}
+                onChangeText={text => setLastName(text)}
+                onBlur={validateLastName}
               />
-              <FormControl.ErrorMessage
-              // leftIcon={<WarningOutlineIcon size="xs" />}
-              >
-                Surname is required
-              </FormControl.ErrorMessage>
+              {lastNameError ? (
+                <FormControl.HelperText
+                  alignSelf="flex-end"
+                  _text={{color: colors.red}}>
+                  {lastNameError}
+                </FormControl.HelperText>
+              ) : null}
               <FormControl.Label
                 marginTop={5}
                 _text={{fontSize: 'xl', fontWeight: 'light'}}>
@@ -104,12 +205,17 @@ const SignUp = ({navigation}) => {
                 borderLeftWidth={0}
                 type="text"
                 fontSize="lg"
+                value={mobilePhone}
+                onChangeText={text => setMobilePhone(text)}
+                onBlur={validateMobilePhone}
               />
-              <FormControl.ErrorMessage
-              // leftIcon={<WarningOutlineIcon size="xs" />}
-              >
-                Mobile phone is required
-              </FormControl.ErrorMessage>
+              {mobilePhoneError ? (
+                <FormControl.HelperText
+                  alignSelf="flex-end"
+                  _text={{color: colors.red}}>
+                  {mobilePhoneError}
+                </FormControl.HelperText>
+              ) : null}
               <FormControl.Label
                 marginTop={5}
                 _text={{fontSize: 'xl', fontWeight: 'light'}}>
@@ -123,12 +229,17 @@ const SignUp = ({navigation}) => {
                 borderLeftWidth={0}
                 type="text"
                 fontSize="lg"
+                value={email}
+                onChangeText={text => setEmail(text)}
+                onBlur={validateEmail}
               />
-              <FormControl.ErrorMessage
-              // leftIcon={<WarningOutlineIcon size="xs" />}
-              >
-                Email is required
-              </FormControl.ErrorMessage>
+              {emailError ? (
+                <FormControl.HelperText
+                  alignSelf="flex-end"
+                  _text={{color: colors.red}}>
+                  {emailError}
+                </FormControl.HelperText>
+              ) : null}
               <FormControl.Label
                 marginTop={5}
                 _text={{fontSize: 'xl', fontWeight: 'light'}}>
@@ -140,14 +251,19 @@ const SignUp = ({navigation}) => {
                 borderTopWidth={0}
                 borderRightWidth={0}
                 borderLeftWidth={0}
-                type="password"
+                type="text"
                 fontSize="lg"
+                value={password}
+                onChangeText={text => setPassword(text)}
+                onBlur={validatePassword}
               />
-              <FormControl.ErrorMessage
-              // leftIcon={<WarningOutlineIcon size="xs" />}
-              >
-                Password is required
-              </FormControl.ErrorMessage>
+              {passwordError ? (
+                <FormControl.HelperText
+                  alignSelf="flex-end"
+                  _text={{color: colors.red}}>
+                  {passwordError}
+                </FormControl.HelperText>
+              ) : null}
               <HStack>
                 <Text fontSize="md" my={4}>
                   Already have an account?
@@ -200,9 +316,7 @@ const SignUp = ({navigation}) => {
             </Stack>
           </FormControl>
           <Button
-            onPress={() => {
-              navigation.navigate('Tab');
-            }}
+            onPress={handleSignUp}
             endIcon={
               <Icons name="arrow-forward" color={colors.white} size={25} />
             }

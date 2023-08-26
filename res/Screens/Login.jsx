@@ -18,6 +18,8 @@ import colors from '../Assets/colors';
 import Icons from 'react-native-vector-icons/Ionicons';
 import {useSelector, useDispatch} from 'react-redux';
 import {LoginAction} from '../Redux/Actions';
+import AsyncStorage from '@react-native-community/async-storage';
+import {Alert} from 'react-native';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState();
@@ -47,8 +49,15 @@ const Login = ({navigation}) => {
     }
   };
 
-  const data = JSON.stringify({email: email, password: password});
-
+  const data = JSON.stringify({
+    email: email,
+    password: password,
+    username: 'mscheema',
+    role: 'user',
+  });
+  const findUserByEmail = inputEmail => {
+    return userData.find(user => user.email === inputEmail);
+  };
   const handleSignIn = async () => {
     validateEmail();
     validatePassword();
@@ -56,8 +65,15 @@ const Login = ({navigation}) => {
     console.log(passwordError);
 
     if (!emailError && !passwordError) {
-      await dispatch(LoginAction(data));
-      navigation.navigate('Tab');
+      await dispatch(LoginAction());
+      const foundUser = findUserByEmail(email);
+      console.log('found user', foundUser);
+      if (foundUser) {
+        await AsyncStorage.setItem('userEmail', email);
+        navigation.navigate('Tab');
+      } else {
+        Alert.alert('User Not Exist Please Sign Up first');
+      }
     }
   };
   const handleBack = () => {
@@ -119,7 +135,7 @@ const Login = ({navigation}) => {
                 </FormControl.HelperText>
               ) : null}
               <FormControl.Label
-                marginTop={20}
+                marginTop={10}
                 _text={{fontSize: 'xl', fontWeight: 'light', color: 'black'}}>
                 Password
               </FormControl.Label>

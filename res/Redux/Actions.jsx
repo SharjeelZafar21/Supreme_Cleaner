@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {actionTypes} from './Action-type';
+import {Alert} from 'react-native';
 // import {Alert} from 'react-native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -9,26 +10,20 @@ export const LoginAction = data => {
   console.log('object arived', data);
   return async function (dispatch) {
     try {
-      const response = await fetch(`${apiBaseUrl}/User`, {
-        method: 'POST',
+      const response = await fetch(`${apiBaseUrl}/users`, {
+        method: 'GET',
         headers: {
           'Content-type': 'application/json',
           Accept: '*/*',
         },
-        body: data,
+        // body: data,
       });
-      const result = await response.json(data);
-      console.log('result', result.accessToken);
+      const result = await response.json();
+      console.log('result', result);
       console.log('status', response.status);
-      if (response.status < 400 && response.status >= 200) {
-        // const token = response.headers.get('Authorization');
-        console.log('token', result.accessToken);
-        await AsyncStorage.setItem('token', result.accessToken);
-        const myToken = await AsyncStorage.getItem('token');
-        console.log('my async token', myToken);
+      if (response.status === 200) {
+        // await AsyncStorage.setItem('userEmail', result.accessToken);
         dispatch({type: actionTypes.LOGIN, payload: result});
-        dispatch(profileData());
-        // console.log('dipatch run')
       } else {
         console.log('You are not authorized');
         Alert.alert('Your are not user please signup first');
@@ -56,42 +51,36 @@ export const LoginAction = data => {
 //   };
 // };
 
-// export const SignUpAction = data => {
-//   console.log('object arived');
-//   console.log('my userdata', data);
-//   return async function (dispatch) {
-//     // const tokenData = await AsyncStorage.getItem('token');
-//     // console.log(tokenData);
-//     try {
-//       console.log('enter in try');
-//       const response = await fetch(`http://localhost:5000/auth/signup`, {
-//         method: 'POST',
-//         headers: {
-//           'Content-type': 'application/json',
-//           Accept: '*/*',
-//         },
-//         body: data,
-//       });
-//       console.log('respose', response);
-
-//       const result = await response.json(data);
-//       console.log(response.status);
-//       console.log('result', result);
-//       if (response.status < 400 && response.status >= 200) {
-//         dispatch({type: actionTypes.SIGNUP, payload: result});
-//         console.log('complete');
-//         Alert.alert('Signed Up Successfully');
-//       } else {
-//         console.log('You are not authorized');
-//         Alert.alert('You are not autharized', result.message);
-//         dispatch({type: actionTypes.SIGNUPERR});
-//       }
-//     } catch (err) {
-//       console.log('User is not SignedUp Properly', err);
-//       Alert.alert('User is not SignedUp Properly', err);
-//     }
-//   };
-// };
+export const SignUpAction = data => {
+  console.log('my userdata', data);
+  return async function (dispatch) {
+    try {
+      const response = await fetch(`${apiBaseUrl}/auth/local/register`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          Accept: '*/*',
+        },
+        body: data,
+      });
+      console.log('respose', response);
+      const result = await response.json(data);
+      console.log(response.status);
+      console.log('result', result);
+      if (response.status === 200) {
+        dispatch({type: actionTypes.SIGNUP, payload: result});
+        console.log('Signed Up Successfully');
+      } else {
+        console.log('You are not authorized');
+        Alert.alert('You are not autharized', result.message);
+        dispatch({type: actionTypes.SIGNUPERR});
+      }
+    } catch (err) {
+      console.log('User is not SignedUp Properly', err);
+      Alert.alert('User is not SignedUp Properly', err);
+    }
+  };
+};
 
 // export const postJobAction = data => {
 //   return async function (dispatch) {
