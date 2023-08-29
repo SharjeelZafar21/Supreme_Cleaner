@@ -9,8 +9,36 @@ import {
   VStack,
 } from 'native-base';
 import BaseCard from '../Components/BaseCard';
+import {useQuery} from '@apollo/client';
+import gql from 'graphql-tag';
 
 const Price = ({navigation}) => {
+  const SERVICES = gql`
+    query GetServices {
+      services {
+        data {
+          id
+
+          attributes {
+            ServiceName
+            Slug
+            Excerpt
+            FeaturedImage {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  const {data, loading, error} = useQuery(SERVICES);
+  console.log('services', data);
+  console.log('error', error);
+  // console.log('image url', data.services?.data?.attributes);
   return (
     <Box height="100%" width="100%">
       <Heading marginTop="20px" color="#32cd32" marginLeft="10px">
@@ -20,51 +48,24 @@ const Price = ({navigation}) => {
         How can we help?
       </Text>
       <ScrollView h="100%" w="100%">
-        {/* <VStack backgroundColor="white" w="95%" alignSelf="center" m={3}> */}
-        {/* <HStack space={1}> */}
-        <BaseCard
-          onPress={() => {
-            navigation.navigate('DryClean', {
-              GigsCategory: 'flex',
-            });
-          }}
-          title="Dry Clean"
-          image_url={require('../Assets/dryclean.jpg')}
-          description="Silk, linen, cashmere, we can clean anything with a “dry cleaning only” label. Our process combines artisan care with eco technologies for high-quality result."
-        />
-        <BaseCard
-          onPress={() => {
-            navigation.navigate('Loundary', {
-              GigsCategory: 'banner',
-            });
-          }}
-          title="Loundary Wash & Fold"
-          image_url={require('../Assets/loundary.jpg')}
-          description="Why not take laundry off your to-do list and put it on ours? For your everyday laundry, we offer a convenient ‘Wash & Fold’ service, priced by the load."
-        />
-        {/* </HStack> */}
-        {/* <HStack space={1}> */}
-        <BaseCard
-          onPress={() => {
-            navigation.navigate('Bedding', {
-              GigsCategory: 'digital-marketing',
-            });
-          }}
-          title="Home & Bedding"
-          image_url={require('../Assets/bedding.jpg')}
-          description="Bed linen, duvets, pillows, sofa covers, curtains, rugs... We clean all household items, no matter how bulky!"
-        />
-        <BaseCard
-          onPress={() => {
-            navigation.navigate('ShirtService', {
-              GigsCategory: 'flyer',
-            });
-          }}
-          title="Shirt Services"
-          image_url={require('../Assets/shirt.jpg')}
-          description="For anyone who's got a packed schedule, our quality hand-finished shirt service is the perfect lifehack! At SUPREME we provide a leading natural"
-        />
-        {/* </VStack> */}
+        {data ? (
+          data.services?.data.map(item => (
+            <BaseCard
+              key={item.id}
+              onPress={() => {
+                navigation.navigate('DryClean', {
+                  slug: item.attributes.Slug,
+                  title: item.attributes.ServiceName,
+                });
+              }}
+              title={item.attributes.ServiceName}
+              image_url={item.attributes.FeaturedImage.data[0].attributes.url}
+              description={item.attributes.Excerpt}
+            />
+          ))
+        ) : (
+          <Heading>There are no services yet</Heading>
+        )}
       </ScrollView>
     </Box>
   );

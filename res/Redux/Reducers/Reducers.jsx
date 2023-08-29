@@ -48,126 +48,6 @@ const postjobinitialstate = {
   postjob: null,
 };
 
-export const addJob = (state = postjobinitialstate, {type, payload}) => {
-  switch (type) {
-    case actionTypes.POSTJOB:
-      return {
-        ...state,
-        postjob: payload,
-      };
-    case actionTypes.JOBERR:
-      return {
-        postjob: {...state},
-      };
-    default:
-      return {...state};
-  }
-};
-const postgiginitialstate = {
-  postjob: null,
-};
-
-export const addGig = (state = postgiginitialstate, {type, payload}) => {
-  switch (type) {
-    case actionTypes.POSTGIG:
-      return {
-        ...state,
-        postgig: payload,
-      };
-    case actionTypes.GIGERR:
-      return {
-        postgig: {...state},
-      };
-    default:
-      return {...state};
-  }
-};
-const postproposalinitialstate = {
-  postproposal: null,
-};
-
-export const addProposal = (
-  state = postproposalinitialstate,
-  {type, payload},
-) => {
-  switch (type) {
-    case actionTypes.POSTPROPOSAL:
-      return {
-        ...state,
-        postproposal: payload,
-      };
-    case actionTypes.POSTPROPOSALERR:
-      return {
-        postproposal: {...state},
-      };
-    default:
-      return {...state};
-  }
-};
-const profileinitialstate = {
-  profile: null,
-};
-export const profileReducer = (
-  state = profileinitialstate,
-  {type, payload},
-) => {
-  switch (type) {
-    case actionTypes.PROFILEDATA:
-      return {
-        ...state,
-        profile: payload,
-      };
-    case actionTypes.PROFILEERR:
-      return {
-        ...state,
-      };
-    default:
-      return {...state};
-  }
-};
-
-const gigsinitialstate = {
-  gigs: null,
-};
-
-export const gigsListReducer = (state = gigsinitialstate, {type, payload}) => {
-  switch (type) {
-    case actionTypes.GIGSLIST:
-      return {
-        ...state,
-        gigs: payload,
-      };
-    case actionTypes.GIGSERR:
-      return {
-        gigs: {...state},
-      };
-    default:
-      return {...state};
-  }
-};
-const sellergigsinitialstate = {
-  sellergigs: null,
-};
-
-export const sellergigsListReducer = (
-  state = sellergigsinitialstate,
-  {type, payload},
-) => {
-  switch (type) {
-    case actionTypes.SELLERGIG:
-      return {
-        ...state,
-        sellergigs: payload,
-      };
-    case actionTypes.SELLERGIGERR:
-      return {
-        ...state,
-      };
-    default:
-      return {...state};
-  }
-};
-
 const ordersinitialstate = {
   orders: null,
 };
@@ -186,76 +66,21 @@ export const ordersReducer = (state = ordersinitialstate, {type, payload}) => {
       return {...state};
   }
 };
-const userjobproposalinitialstate = {
-  userjobproposal: null,
+
+const servicesinitialstate = {
+  services: null,
 };
-export const userJobProposalList = (
-  state = userjobproposalinitialstate,
+export const servicesReducer = (
+  state = servicesinitialstate,
   {type, payload},
 ) => {
   switch (type) {
-    case actionTypes.GETPROPOSAL:
+    case actionTypes.SERVICES:
       return {
         ...state,
-        userjobproposal: payload,
+        services: payload,
       };
-    case actionTypes.GETPROPOSALERR:
-      return {
-        ...state,
-      };
-    default:
-      return {...state};
-  }
-};
-const alljobinitialstate = {
-  alljob: null,
-};
-export const AllJobsList = (state = alljobinitialstate, {type, payload}) => {
-  switch (type) {
-    case actionTypes.GETALLJOBS:
-      return {
-        ...state,
-        alljob: payload,
-      };
-    case actionTypes.ALLJOBERR:
-      return {
-        ...state,
-      };
-    default:
-      return {...state};
-  }
-};
-
-const logoutinitialstate = {
-  token: null,
-};
-
-export const LogOut = (state = logoutinitialstate, {type, payload}) => {
-  switch (type) {
-    case actionTypes.LOGOUT:
-      return {
-        ...state,
-        user: payload,
-      };
-    case actionTypes.LOGOUTERR:
-      return {
-        ...state,
-      };
-    default:
-      return {...state};
-  }
-};
-const citiesinitialstate = {
-  cities: [],
-};
-export const CitiesReducer = (state = citiesinitialstate, {type, payload}) => {
-  switch (type) {
-    case actionTypes.CITIES:
-      return {
-        ...state,
-        cities: payload,
-      };
-    case actionTypes.CITIESERR:
+    case actionTypes.SERVICESERR:
       return {
         ...state,
       };
@@ -301,65 +126,6 @@ export const CreateOrderReducer = (
     case actionTypes.CREATEORDERERR:
       return {
         ...state,
-      };
-    default:
-      return {...state};
-  }
-};
-const getorderinitialstate = {
-  bOrder: null,
-};
-export const GetOrderReducer = (
-  state = getorderinitialstate,
-  {type, payload},
-) => {
-  switch (type) {
-    case actionTypes.GETORDER:
-      return {
-        ...state,
-        bOrder: payload,
-      };
-    case actionTypes.GETORDERERR:
-      return {
-        ...state,
-      };
-    default:
-      return {...state};
-  }
-};
-const getsorderinitialstate = {
-  sOrder: null,
-};
-export const GetSOrderReducer = (
-  state = getsorderinitialstate,
-  {type, payload},
-) => {
-  switch (type) {
-    case actionTypes.GETSORDER:
-      return {
-        ...state,
-        sOrder: payload,
-      };
-    case actionTypes.GETSORDERERR:
-      return {
-        ...state,
-      };
-    default:
-      return {...state};
-  }
-};
-const userNameinitialstate = {
-  UserName: null,
-};
-export const UserNameReducer = (
-  state = userNameinitialstate,
-  {type, payload},
-) => {
-  switch (type) {
-    case actionTypes.SETUSERNAME:
-      return {
-        ...state,
-        UserName: payload,
       };
     default:
       return {...state};

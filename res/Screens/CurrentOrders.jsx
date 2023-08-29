@@ -5,27 +5,56 @@ import {useDispatch, useSelector} from 'react-redux';
 import {ordersAction} from '../Redux/Actions';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Table, Row} from 'react-native-table-component';
+import {RefreshControl} from 'react-native';
+import gql from 'graphql-tag';
+import {useQuery} from '@apollo/client';
 
 const CurrentOrders = () => {
-  const orders = useSelector(state => state.orders.orders);
-  const dispatch = useDispatch();
+  const GET_ORDERS_QUERY = gql`
+    query GetORDERS($email: String!) {
+      orders(filters: {email: {eq: $email}}) {
+        data {
+          id
+          attributes {
+            name
+            email
+            phone
+            address
+            items
+            amount
+            cellphone
+            city
+            postcode
+            note
+            approved
+          }
+        }
+      }
+    }
+  `;
+  const [orders, setOrders] = useState([]);
+  const [email, setEmail] = useState();
 
-  const [foundOrders, setFoundOrders] = useState([]);
+  const {loading, error, data} = useQuery(GET_ORDERS_QUERY, {
+    variables: {email},
+  });
+
+  console.log('data ', data?.orders?.data);
+
+  console.log('orders', orders);
 
   const getEmailFromStorage = async () => {
     const email = await AsyncStorage.getItem('userEmail');
+    setEmail(email);
     console.log('async email', email);
-    const filteredOrders = orders.data.filter(
-      order => order.attributes.email === email,
-    );
-    console.log('found orders', filteredOrders);
-    setFoundOrders(filteredOrders);
   };
 
   useEffect(() => {
-    dispatch(ordersAction());
     getEmailFromStorage();
-  }, []);
+    if (data) {
+      setOrders(data.orders.data);
+    }
+  }, [data]);
   const tableHead = [
     'Order',
     'Name',
@@ -34,7 +63,7 @@ const CurrentOrders = () => {
     'Total Amount',
     'Status',
   ];
-  const tableData = foundOrders.map(order => [
+  const tableData = orders.map(order => [
     order.id,
     order.attributes.name,
     order.attributes.email,
@@ -44,31 +73,31 @@ const CurrentOrders = () => {
   ]);
   return (
     <Box backgroundColor={colors.white} h="100%" w="100%">
-      {foundOrders.length === 0 ? (
-        <Heading w="50%" textAlign="center" alignSelf="center">
-          You don't have any current orders yet
-        </Heading>
-      ) : (
-        <Table>
-          <Row
-            data={tableHead}
-            flexArr={[0.6, 1, 1.5, 1, 1, 1, 1]}
-            style={{height: 50, backgroundColor: colors.body}}
-            textStyle={{textAlign: 'center', fontWeight: 'bold'}}
-          />
-          {tableData.map((rowData, index) => (
-            <ScrollView>
+      <ScrollView>
+        {orders.length === 0 ? (
+          <Heading w="50%" textAlign="center" alignSelf="center">
+            You don't have any current orders yet
+          </Heading>
+        ) : (
+          <Table>
+            <Row
+              data={tableHead}
+              flexArr={[0.6, 1.5, 1, 1, 1, 1, 1]}
+              style={{height: 50, backgroundColor: colors.body}}
+              textStyle={{textAlign: 'center', fontWeight: 'bold'}}
+            />
+            {tableData.map((rowData, index) => (
               <Row
                 key={index}
                 data={rowData}
-                flexArr={[0.6, 1.2, 1.5, 1, 1, 1, 1]}
-                style={{height: 80}}
+                flexArr={[0.6, 1.5, 1, 1, 1, 1, 1]}
+                style={{marginTop: 15}}
                 textStyle={{textAlign: 'center'}}
               />
-            </ScrollView>
-          ))}
-        </Table>
-      )}
+            ))}
+          </Table>
+        )}
+      </ScrollView>
     </Box>
   );
 };

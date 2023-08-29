@@ -15,6 +15,8 @@ import CustomHeader from '../Components/CustomHeader';
 import TabNav from './TabNav';
 import Price from '../Screens/Price';
 import HelpFeedback from '../Screens/HelpFeedback';
+import Cart from '../Screens/Cart';
+import PostOrder from '../Screens/PostOrder';
 
 const Nav = ({navigation}) => {
   const Stack = createNativeStackNavigator();
@@ -105,6 +107,22 @@ const Nav = ({navigation}) => {
           component={HelpFeedback}
           options={{
             title: 'Help & Feedback',
+            // headerTitle: () => <CustomHeader />,
+          }}
+        />
+        <Stack.Screen
+          name="Cart"
+          component={Cart}
+          options={{
+            title: 'Add to Cart',
+            // headerTitle: () => <CustomHeader />,
+          }}
+        />
+        <Stack.Screen
+          name="Post Order"
+          component={PostOrder}
+          options={{
+            title: 'Order Post',
             // headerTitle: () => <CustomHeader />,
           }}
         />

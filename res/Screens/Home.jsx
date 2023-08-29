@@ -8,20 +8,35 @@ import {
   ScrollView,
   Text,
 } from 'native-base';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import colors from '../Assets/colors';
 import Icons from '../Assets/icons';
 import WelcomeCard from '../Components/WelcomeCard';
-import {useDispatch} from 'react-redux';
-import {ordersAction} from '../Redux/Actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {LoginAction, ordersAction} from '../Redux/Actions';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
+  const userData = useSelector(state => state.userStatus.user);
+  const [foundUser, setFoundUser] = useState([]);
+
+  const getEmailFromStorage = async () => {
+    const email = await AsyncStorage.getItem('userEmail');
+    console.log('async email', email);
+    const findUser = userData.filter(user => user.email == email);
+    console.log('found user i home', findUser);
+    setFoundUser(findUser);
+  };
+  useEffect(() => {
+    LoginAction();
+    getEmailFromStorage();
+  }, []);
   return (
     <Box backgroundColor={colors.white} h="100%" w="100%">
-      <ScrollView>
-        <Box h="10%" m={5}>
-          <Heading fontSize="4xl">Welcome Numan,</Heading>
+      <ScrollView h="100%">
+        <Box m={5}>
+          <Heading fontSize="4xl">Welcome {foundUser[0]?.username},</Heading>
           <Text fontSize="lg" color={colors.darkgrey}>
             What can we do for you today?
           </Text>

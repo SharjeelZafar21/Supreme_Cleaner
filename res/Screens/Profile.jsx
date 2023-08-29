@@ -1,12 +1,37 @@
 import {Box, HStack, Heading, Image, Link, Text} from 'native-base';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Pressable} from 'react-native';
 import Icons from '../Assets/icons';
 import colors from '../Assets/colors';
 import ProfileCard from '../Components/ProfileCard';
 import {NavigationContainer} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {LoginAction} from '../Redux/Actions';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Profile = ({navigation}) => {
+  const userData = useSelector(state => state.userStatus.user);
+  const [foundUser, setFoundUser] = useState([]);
+  const dispatch = useDispatch();
+
+  const getEmailFromStorage = async () => {
+    const email = await AsyncStorage.getItem('userEmail');
+    console.log('async email', email);
+    const findUser = userData.filter(user => user.email == email);
+    console.log('found user i home', findUser);
+    setFoundUser(findUser);
+  };
+  useEffect(() => {
+    dispatch(LoginAction());
+    getEmailFromStorage();
+  }, []);
+  // const logOut = async () => {
+  //   const userEmail = await AsyncStorage.removeItem('userEmail');
+  //   // dispatch(LoginAction());
+  //   dispatch({type: actionTypes.LOGIN, payload: null});
+  //   // dispatch({type: actionTypes.PROFILEDATA, payload: null});
+  //   console.log('user email after remove', userEmail);
+  // };
   return (
     <Box h="100%" w="100%" bgColor={colors.white}>
       <Box h="30%" bgColor={colors.darkgrey} p={3} justifyContent="center">
@@ -19,9 +44,15 @@ const Profile = ({navigation}) => {
           m={2}
         /> */}
         <Heading size="xl" color={colors.white}>
-          Welcome Numan,
+          Welcome {foundUser[0]?.username},
         </Heading>
-        <Link _text={{color: colors.white, fontSize: 'xl'}}>Logout</Link>
+        <Link
+          _text={{color: colors.white, fontSize: 'xl'}}
+          onPress={() => {
+            navigation.navigate('Welcome');
+          }}>
+          Logout
+        </Link>
       </Box>
       <Box h="70%" alignItems="center">
         <ProfileCard title="Recurring Booking" iconName="sync-outline" />

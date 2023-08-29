@@ -10,22 +10,30 @@ import {
   Text,
 } from 'native-base';
 
-const BaseCard = ({title, image_url, onPress,description}) => {
+const BaseCard = ({title, image_url, onPress, description, key}) => {
+  console.log('image url', image_url);
   return (
-    <Pressable onPress={onPress} marginTop={5} h="500px" w="95%" alignSelf="center" backgroundColor="white">
-        <Image
-          alignSelf="center"
-          height="60%"
-          source={image_url}
-          alt="Image"
-        />
-        <Heading
-          margin="15px">
-          {title}
-        </Heading>
-        <Text marginLeft="20px" marginRight="10px" fontSize="lg">
-          {description}
-        </Text>
+    <Pressable
+      key={key}
+      borderRadius={10}
+      onPress={onPress}
+      marginTop={5}
+      h={450}
+      w="95%"
+      alignSelf="center"
+      backgroundColor="white">
+      <Image
+        borderTopRadius={10}
+        alignSelf="center"
+        height="60%"
+        w="100%"
+        source={{uri: image_url}}
+        alt="Image"
+      />
+      <Heading margin="15px">{title}</Heading>
+      <Text marginLeft="20px" marginRight="10px" fontSize="lg">
+        {description}
+      </Text>
     </Pressable>
   );
 };

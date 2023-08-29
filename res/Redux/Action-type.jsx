@@ -8,4 +8,6 @@ export const actionTypes = {
   ERR: 'ERR',
   ORDER: 'ORDER',
   ORDERERR: 'ORDERERR',
+  SERVICES: 'SERVICES',
+  SERVICESERR: 'SERVICESERR',
 };

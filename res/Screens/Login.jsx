@@ -20,15 +20,30 @@ import {useSelector, useDispatch} from 'react-redux';
 import {LoginAction} from '../Redux/Actions';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Alert} from 'react-native';
+import {useMutation} from '@apollo/client';
+import {gql} from 'graphql-tag';
 
 const Login = ({navigation}) => {
+  const LOGIN_MUTATION = gql`
+    mutation LoginMutation($email: String!, $password: String!) {
+      login(input: {identifier: $email, password: $password}) {
+        jwt
+        user {
+          id
+          email
+        }
+      }
+    }
+  `;
+
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
-  const userData = useSelector(state => state.userStatus.user);
-  console.log('user data ', userData);
-  const dispatch = useDispatch();
+
+  const [login, {loading, error}] = useMutation(LOGIN_MUTATION);
+  console.log('error in Login', error);
+
   const validateEmail = () => {
     if (!email) {
       setEmailError('Email is required');
@@ -48,16 +63,6 @@ const Login = ({navigation}) => {
       setPasswordError('');
     }
   };
-
-  const data = JSON.stringify({
-    email: email,
-    password: password,
-    username: 'mscheema',
-    role: 'user',
-  });
-  const findUserByEmail = inputEmail => {
-    return userData.find(user => user.email === inputEmail);
-  };
   const handleSignIn = async () => {
     validateEmail();
     validatePassword();
@@ -65,14 +70,15 @@ const Login = ({navigation}) => {
     console.log(passwordError);
 
     if (!emailError && !passwordError) {
-      await dispatch(LoginAction());
-      const foundUser = findUserByEmail(email);
-      console.log('found user', foundUser);
-      if (foundUser) {
-        await AsyncStorage.setItem('userEmail', email);
+      try {
+        const {data} = await login({variables: {email, password}});
+        await AsyncStorage.setItem('userId', data.login.user.id);
+        await AsyncStorage.setItem('userEmail', data.login.user.email);
+        await AsyncStorage.setItem('jwt', data.login.jwt);
+        console.log('login');
         navigation.navigate('Tab');
-      } else {
-        Alert.alert('User Not Exist Please Sign Up first');
+      } catch (error) {
+        console.log(error);
       }
     }
   };
@@ -178,6 +184,7 @@ const Login = ({navigation}) => {
             my={8}>
             Sign in
           </Button>
+          {error && <Text>{error}</Text>}
         </Box>
       </ScrollView>
     </Box>
