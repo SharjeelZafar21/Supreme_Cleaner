@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Box,
   Button,
@@ -20,19 +20,69 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import {NavigationContainer} from '@react-navigation/native';
 import {SignUpAction} from '../Redux/Actions';
 import {useDispatch} from 'react-redux';
+import {Linking, TextInput} from 'react-native';
+import {useMutation} from '@apollo/client';
+import gql from 'graphql-tag';
+import AsyncStorage from '@react-native-community/async-storage';
 
-const PostOrder = () => {
-  const [Name, setName] = useState();
-  const [note, setLastName] = useState();
-  const [mobilePhone, setMobilePhone] = useState();
+const PostOrder = ({navigation}) => {
+  const CREATE_ORDER = gql`
+    mutation createOrder(
+      $name: String!
+      $email: String!
+      $phone: String!
+      $cellphone: String!
+      $address: String!
+      $items: String!
+      $amount: Int!
+      $city: String!
+      $postcode: String!
+      $note: String!
+    ) {
+      createOrder(
+        data: {
+          name: $name
+          email: $email
+          phone: $phone
+          cellphone: $cellphone
+          address: $address
+          items: $items
+          amount: $amount
+          city: $city
+          postcode: $postcode
+          note: $note
+        }
+      ) {
+        data {
+          id
+          attributes {
+            name
+            email
+            phone
+            cellphone
+            address
+            items
+            amount
+            city
+            postcode
+            note
+          }
+        }
+      }
+    }
+  `;
+
+  const [name, setName] = useState();
+  const [note, setNote] = useState();
+  const [phone, setMobilePhone] = useState();
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [adress, setAdress] = useState();
+  const [cellPhone, setCellPhone] = useState();
+  const [address, setAdress] = useState();
   const [city, setCity] = useState();
   const [postcode, setPostCode] = useState();
 
   const [NameError, setNameError] = useState();
-  const [noteError, setNote] = useState();
+  const [noteError, setNoteError] = useState();
   const [mobilePhoneError, setMobilePhoneError] = useState();
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
@@ -40,9 +90,34 @@ const PostOrder = () => {
   const [cityError, setCityError] = useState();
   const [postcodeError, setPostCodeError] = useState();
 
+  const [orderId, setOrderId] = useState('');
+  const [totalPrice, setTotalPrice] = useState('');
+  const [cartItems, setCartItems] = useState([]);
+
+  console.log();
+
+  const [createOrder] = useMutation(CREATE_ORDER, {
+    onCompleted: async data => {
+      await setOrderId(data?.createOrder?.data?.id);
+      console.log('order id ', data.createOrder.data.id);
+      const paymentGatewayURL = `https://sandbox.payfast.co.za/eng/process?merchant_id=10000100&merchant_key=46f0cd694581a&amount=${totalPrice}&item_name=${encodeURIComponent(
+        itemString,
+      )}&custom_str1=${orderId}`;
+
+      // Open the payment gateway URL
+      await Linking.openURL(paymentGatewayURL);
+
+      console.log('Payment gateway URL opened successfully');
+      navigation.navigate('My Orders');
+    },
+    onError: error => {
+      console.error('Mutation error:', error);
+    },
+  });
+
   const validateName = () => {
-    if (!Name) {
-      setNameError('Name is required');
+    if (!name) {
+      setNameError('name is required');
     } else {
       setNameError('');
     }
@@ -50,14 +125,14 @@ const PostOrder = () => {
 
   const validateNote = () => {
     if (!note) {
-      setNote('Note is required');
+      setNoteError('Note is required');
     } else {
-      setNote('');
+      setNoteError('');
     }
   };
 
   const validateMobilePhone = () => {
-    if (!mobilePhone) {
+    if (!phone) {
       setMobilePhoneError('Mobile Phone is required');
     } else {
       setMobilePhoneError('');
@@ -75,14 +150,14 @@ const PostOrder = () => {
   };
 
   const validatePassword = () => {
-    if (!password) {
+    if (!cellPhone) {
       setPasswordError('Password is required');
     } else {
       setPasswordError('');
     }
   };
   const validateAdress = () => {
-    if (!adress) {
+    if (!address) {
       setAdressError('Adress is required');
     } else {
       setAdressError('');
@@ -113,10 +188,9 @@ const PostOrder = () => {
     validateCity();
     validatePostCode();
   };
-
-  const handleSignUp = async () => {
+  // const itemString = itemStrings.join(', ');
+  const handleSubmit = async event => {
     validateForm();
-
     // If all fields are valid, proceed with sign-up logic
     if (
       !NameError &&
@@ -124,13 +198,69 @@ const PostOrder = () => {
       !mobilePhoneError &&
       !emailError &&
       !passwordError &&
-      !adress &&
-      !city &&
-      !postcode
+      !adressError &&
+      !cityError &&
+      !postcodeError &&
+      !noteError
     ) {
-      navigation.navigate('My Orders');
+      console.log('before try');
+      try {
+        console.log('enter in try');
+        await createOrder({
+          variables: {
+            name: name,
+            email: email,
+            phone: phone,
+            cellphone: cellPhone,
+            address: address,
+            items: itemString,
+            amount: +totalPrice,
+            city: city,
+            postcode: postcode,
+            note: note,
+          },
+        });
+        // Get the orderId from the result data
+        // const orderId = result.data?.createOrder?.data?.id;
+
+        // Construct the payment gateway URL with query parameters
+
+        // await Linking.openURL('https://sandbox.payfast.co.za/eng/process');
+        // event.target.action = 'https://sandbox.payfast.co.za/eng/process';
+        // event.target.submit();
+        console.log('complete');
+
+        // Handle form submission logic here
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
+
+  useEffect(() => {
+    // Load saved quantities from AsyncStorage when the component mounts
+    loadCart();
+  }, []);
+
+  const loadCart = async () => {
+    const cartData = await AsyncStorage.getItem('cart');
+    const totalPrice = await AsyncStorage.getItem('amount');
+    const parsedCartData = JSON.parse(cartData);
+    setCartItems(parsedCartData);
+    setTotalPrice(totalPrice);
+    console.log('cart in storage', cartData);
+    console.log('amount', totalPrice);
+  };
+
+  const itemStrings = cartItems.map(item => {
+    return `${item.quantity} x ${item.item}`;
+  });
+
+  const itemString = itemStrings.join(', ');
+
+  console.log('item strings', itemStrings);
+  console.log('item string', itemString);
+
   return (
     <Box h="100%" w="100%" bgColor={colors.white}>
       <ScrollView>
@@ -151,7 +281,7 @@ const PostOrder = () => {
                 borderLeftWidth={0}
                 type="text"
                 fontSize="lg"
-                value={Name}
+                value={name}
                 onChangeText={text => setName(text)}
                 onBlur={validateName}
               />
@@ -200,7 +330,7 @@ const PostOrder = () => {
                 borderLeftWidth={0}
                 type="text"
                 fontSize="lg"
-                value={mobilePhone}
+                value={phone}
                 onChangeText={text => setMobilePhone(text)}
                 onBlur={validateMobilePhone}
               />
@@ -225,8 +355,8 @@ const PostOrder = () => {
                 borderLeftWidth={0}
                 type="text"
                 fontSize="lg"
-                value={password}
-                onChangeText={text => setPassword(text)}
+                value={cellPhone}
+                onChangeText={text => setCellPhone(text)}
                 onBlur={validatePassword}
               />
               {passwordError ? (
@@ -249,7 +379,7 @@ const PostOrder = () => {
                 borderLeftWidth={0}
                 type="text"
                 fontSize="lg"
-                value={adress}
+                value={address}
                 onChangeText={text => setAdress(text)}
                 onBlur={validateAdress}
               />
@@ -318,7 +448,9 @@ const PostOrder = () => {
                 borderRadius={10}
                 focusOutlineColor={colors.white}
                 _focus={{bgColor: colors.white}}
-                // backgroundColor={colors.body}
+                value={note}
+                onChangeText={text => setNote(text)}
+                onBlur={validateNote}
                 type="text"
                 fontSize="lg"
               />
@@ -332,7 +464,7 @@ const PostOrder = () => {
             </Stack>
           </FormControl>
           <Button
-            onPress={handleSignUp}
+            onPress={handleSubmit}
             endIcon={
               <Icons name="arrow-forward" color={colors.white} size={25} />
             }

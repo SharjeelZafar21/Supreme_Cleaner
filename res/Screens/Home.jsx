@@ -31,7 +31,7 @@ const Home = ({navigation}) => {
   useEffect(() => {
     LoginAction();
     getEmailFromStorage();
-  }, []);
+  }, [userData]);
   return (
     <Box backgroundColor={colors.white} h="100%" w="100%">
       <ScrollView h="100%">

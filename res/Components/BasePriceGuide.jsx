@@ -24,7 +24,7 @@ const BasePriceGuide = ({
               w="80%"
               value={item.price}
               isChecked={selectedItems.some(
-                selectedItem => selectedItem.item === item.item,
+                selectedItem => selectedItem.id === item.id,
               )}
               borderColor={colors.primary}
               colorScheme="green"

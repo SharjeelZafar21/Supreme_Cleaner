@@ -28,8 +28,8 @@ const Welcome = ({navigation}) => {
         </Heading>
         <Text fontSize="md">
           If you already have an account, please sign in. Don't have an account
-          yet? We need to check if you are in our delivery area, so please check
-          your postcode by hitting « Check postcode » below.
+          yet? Supreme’s commitment to eco-friendly, natural cleaning and homes
+          did not end with dry cleaning.
         </Text>
         <Button
           backgroundColor={colors.darkgrey}

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Box,
   Button,
@@ -11,24 +11,54 @@ import {
   Text,
 } from 'native-base';
 import colors from '../Assets/colors';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Cart = ({route, navigation}) => {
   const selectedItems = route.params.selectedItems;
   const initialQuantities = selectedItems.map(item => 1);
   const [quantities, setQuantities] = useState(initialQuantities);
 
-  const handleMinusPress = index => {
+  const [itemsWithQuantities, setItemsWithQuantities] = useState([]);
+
+  console.log('quantities ', quantities);
+  console.log('items with quantity', itemsWithQuantities);
+
+  useEffect(() => {
+    // Load saved quantities from AsyncStorage when the component mounts
+    addQuantitiesToSelectedItems();
+  }, []);
+
+  const addQuantitiesToSelectedItems = () => {
+    const updatedItems = selectedItems.map((item, index) => ({
+      ...item,
+      quantity: quantities[index] || 0, // You can adjust the logic for quantities calculation
+    }));
+    console.log('updated items ', updatedItems);
+    setItemsWithQuantities(updatedItems);
+    // console.log('items with quantity', itemsWithQuantities);
+  };
+
+  const saveCart = async () => {
+    await AsyncStorage.setItem('cart', JSON.stringify(itemsWithQuantities));
+    await AsyncStorage.setItem('amount', JSON.stringify(totalSum));
+  };
+
+  const handleMinusPress = async index => {
     if (quantities[index] > 1) {
       const updatedQuantities = [...quantities];
       updatedQuantities[index] -= 1;
-      setQuantities(updatedQuantities);
+      await setQuantities(updatedQuantities);
+      addQuantitiesToSelectedItems();
+      saveCart();
     }
   };
 
-  const handlePlusPress = index => {
+  const handlePlusPress = async index => {
     const updatedQuantities = [...quantities];
     updatedQuantities[index] += 1;
-    setQuantities(updatedQuantities);
+    await setQuantities(updatedQuantities);
+    addQuantitiesToSelectedItems();
+    saveCart();
   };
 
   // Calculate the individual sum of each item
@@ -110,6 +140,7 @@ const Cart = ({route, navigation}) => {
           my={5}
           _text={{fontSize: 20}}
           onPress={() => {
+            saveCart();
             navigation.navigate('Post Order');
           }}>
           Checkout

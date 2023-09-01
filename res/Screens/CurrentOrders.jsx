@@ -34,8 +34,9 @@ const CurrentOrders = () => {
   `;
   const [orders, setOrders] = useState([]);
   const [email, setEmail] = useState();
+  const [refreshing, setRefreshing] = useState(false);
 
-  const {loading, error, data} = useQuery(GET_ORDERS_QUERY, {
+  const {loading, error, data, refetch} = useQuery(GET_ORDERS_QUERY, {
     variables: {email},
   });
 
@@ -55,6 +56,17 @@ const CurrentOrders = () => {
       setOrders(data.orders.data);
     }
   }, [data]);
+
+  const onRefresh = () => {
+    setRefreshing(true); // Set refreshing to true
+    refetch(); // Fetch data again
+    setRefreshing(false); // Set refreshing back to false once data is fetched
+  };
+
+  const pendingOrders = orders.filter(order => !order.attributes.approved);
+
+  console.log('pending orders', pendingOrders);
+
   const tableHead = [
     'Order',
     'Name',
@@ -63,7 +75,7 @@ const CurrentOrders = () => {
     'Total Amount',
     'Status',
   ];
-  const tableData = orders.map(order => [
+  const tableData = pendingOrders.map(order => [
     order.id,
     order.attributes.name,
     order.attributes.email,
@@ -73,8 +85,15 @@ const CurrentOrders = () => {
   ]);
   return (
     <Box backgroundColor={colors.white} h="100%" w="100%">
-      <ScrollView>
-        {orders.length === 0 ? (
+      <ScrollView
+        refreshControl={
+          // Attach the RefreshControl component to ScrollView
+          <RefreshControl
+            refreshing={refreshing} // Pass the refreshing status
+            onRefresh={onRefresh} // Call the onRefresh function
+          />
+        }>
+        {pendingOrders.length === 0 ? (
           <Heading w="50%" textAlign="center" alignSelf="center">
             You don't have any current orders yet
           </Heading>
