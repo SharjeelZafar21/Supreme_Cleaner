@@ -70,6 +70,7 @@ export const SignUpAction = data => {
       if (response.status === 200) {
         dispatch({type: actionTypes.SIGNUP, payload: result});
         console.log('Signed Up Successfully');
+        Alert.alert('Signed Up Successfully');
       } else {
         console.log('You are not authorized');
         Alert.alert('You are not autharized', result.message);

@@ -24,14 +24,14 @@ const Home = ({navigation}) => {
   const getEmailFromStorage = async () => {
     const email = await AsyncStorage.getItem('userEmail');
     console.log('async email', email);
-    const findUser = userData.filter(user => user.email == email);
+    const findUser = await userData.filter(user => user.email === email);
     console.log('found user i home', findUser);
     setFoundUser(findUser);
   };
   useEffect(() => {
     LoginAction();
     getEmailFromStorage();
-  }, [userData]);
+  }, [foundUser]);
   return (
     <Box backgroundColor={colors.white} h="100%" w="100%">
       <ScrollView h="100%">

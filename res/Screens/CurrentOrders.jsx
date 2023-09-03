@@ -69,18 +69,18 @@ const CurrentOrders = () => {
 
   const tableHead = [
     'Order',
-    'Name',
-    'Email',
+    // 'Name',
     'Items',
     'Total Amount',
+    'Post Code',
     'Status',
   ];
   const tableData = pendingOrders.map(order => [
     order.id,
-    order.attributes.name,
-    order.attributes.email,
+    // order.attributes.name,
     order.attributes.items,
     order.attributes.amount.toString(),
+    order.attributes.postcode,
     order.attributes.approved ? 'Approved' : 'Pending',
   ]);
   return (

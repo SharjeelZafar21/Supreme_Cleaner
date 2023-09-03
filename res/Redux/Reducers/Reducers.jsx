@@ -110,20 +110,17 @@ export const PaymentReducer = (
       return {...state};
   }
 };
-const createorderinitialstate = {
-  order: null,
+const tokeninitialstate = {
+  token: null,
 };
-export const CreateOrderReducer = (
-  state = createorderinitialstate,
-  {type, payload},
-) => {
+export const tokenReducer = (state = tokeninitialstate, {type, payload}) => {
   switch (type) {
-    case actionTypes.CREATEORDER:
+    case actionTypes.TOKEN:
       return {
         ...state,
-        order: payload,
+        token: payload,
       };
-    case actionTypes.CREATEORDERERR:
+    case actionTypes.TOKENERR:
       return {
         ...state,
       };

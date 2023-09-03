@@ -10,4 +10,6 @@ export const actionTypes = {
   ORDERERR: 'ORDERERR',
   SERVICES: 'SERVICES',
   SERVICESERR: 'SERVICESERR',
+  TOKEN: 'TOKEN',
+  TOKENERR: 'TOKENERR',
 };

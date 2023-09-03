@@ -24,13 +24,13 @@ import {useDispatch} from 'react-redux';
 const SignUp = ({navigation}) => {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
-  const [mobilePhone, setMobilePhone] = useState();
+  const [confirmpassword, setConfirmPassword] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const [firstNameError, setFirstNameError] = useState();
   const [lastNameError, setLastNameError] = useState();
-  const [mobilePhoneError, setMobilePhoneError] = useState();
+  const [confirmpasswordError, setConfirmPasswordError] = useState();
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
 
@@ -38,7 +38,7 @@ const SignUp = ({navigation}) => {
 
   const validateFirstName = () => {
     if (!firstName) {
-      setFirstNameError('First Name is required');
+      setFirstNameError('Name is required');
     } else {
       setFirstNameError('');
     }
@@ -46,17 +46,17 @@ const SignUp = ({navigation}) => {
 
   const validateLastName = () => {
     if (!lastName) {
-      setLastNameError('Last Name is required');
+      setLastNameError('Username is required');
     } else {
       setLastNameError('');
     }
   };
 
-  const validateMobilePhone = () => {
-    if (!mobilePhone) {
-      setMobilePhoneError('Mobile Phone is required');
+  const validateConfirmPassword = () => {
+    if (password !== confirmpassword) {
+      setConfirmPasswordError('Password not match');
     } else {
-      setMobilePhoneError('');
+      setConfirmPasswordError('');
     }
   };
 
@@ -83,7 +83,7 @@ const SignUp = ({navigation}) => {
   const validateForm = () => {
     validateFirstName();
     validateLastName();
-    validateMobilePhone();
+    validateConfirmPassword();
     validateEmail();
     validatePassword();
   };
@@ -102,9 +102,9 @@ const SignUp = ({navigation}) => {
     if (
       !firstNameError &&
       !lastNameError &&
-      !mobilePhoneError &&
       !emailError &&
-      !passwordError
+      !passwordError &&
+      !confirmpasswordError
     ) {
       // Perform sign-up logic
       await dispatch(SignUpAction(data));
@@ -147,7 +147,7 @@ const SignUp = ({navigation}) => {
           <FormControl>
             <Stack>
               <FormControl.Label _text={{fontSize: 'xl', fontWeight: 'light'}}>
-                First Name
+                Name
               </FormControl.Label>
               <Input
                 focusOutlineColor={colors.white}
@@ -171,7 +171,7 @@ const SignUp = ({navigation}) => {
               <FormControl.Label
                 marginTop={5}
                 _text={{fontSize: 'xl', fontWeight: 'light'}}>
-                Surname
+                username
               </FormControl.Label>
               <Input
                 focusOutlineColor={colors.white}
@@ -190,30 +190,6 @@ const SignUp = ({navigation}) => {
                   alignSelf="flex-end"
                   _text={{color: colors.red}}>
                   {lastNameError}
-                </FormControl.HelperText>
-              ) : null}
-              <FormControl.Label
-                marginTop={5}
-                _text={{fontSize: 'xl', fontWeight: 'light'}}>
-                Mobile Phone
-              </FormControl.Label>
-              <Input
-                focusOutlineColor={colors.white}
-                backgroundColor={colors.white}
-                borderTopWidth={0}
-                borderRightWidth={0}
-                borderLeftWidth={0}
-                type="text"
-                fontSize="lg"
-                value={mobilePhone}
-                onChangeText={text => setMobilePhone(text)}
-                onBlur={validateMobilePhone}
-              />
-              {mobilePhoneError ? (
-                <FormControl.HelperText
-                  alignSelf="flex-end"
-                  _text={{color: colors.red}}>
-                  {mobilePhoneError}
                 </FormControl.HelperText>
               ) : null}
               <FormControl.Label
@@ -251,7 +227,7 @@ const SignUp = ({navigation}) => {
                 borderTopWidth={0}
                 borderRightWidth={0}
                 borderLeftWidth={0}
-                type="text"
+                type="password"
                 fontSize="lg"
                 value={password}
                 onChangeText={text => setPassword(text)}
@@ -262,6 +238,30 @@ const SignUp = ({navigation}) => {
                   alignSelf="flex-end"
                   _text={{color: colors.red}}>
                   {passwordError}
+                </FormControl.HelperText>
+              ) : null}
+              <FormControl.Label
+                marginTop={5}
+                _text={{fontSize: 'xl', fontWeight: 'light'}}>
+                Confirm Password
+              </FormControl.Label>
+              <Input
+                focusOutlineColor={colors.white}
+                backgroundColor={colors.white}
+                borderTopWidth={0}
+                borderRightWidth={0}
+                borderLeftWidth={0}
+                type="password"
+                fontSize="lg"
+                value={confirmpassword}
+                onChangeText={text => setConfirmPassword(text)}
+                onBlur={validateConfirmPassword}
+              />
+              {confirmpasswordError ? (
+                <FormControl.HelperText
+                  alignSelf="flex-end"
+                  _text={{color: colors.red}}>
+                  {confirmpasswordError}
                 </FormControl.HelperText>
               ) : null}
               <HStack>

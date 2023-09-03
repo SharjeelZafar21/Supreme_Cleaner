@@ -25,40 +25,69 @@ const Cart = ({route, navigation}) => {
 
   useEffect(() => {
     // Load saved quantities from AsyncStorage when the component mounts
-    addQuantitiesToSelectedItems();
+    const loadCartData = async () => {
+      try {
+        // Load quantities from AsyncStorage
+        const storedQuantities = await AsyncStorage.getItem('cart');
+        if (storedQuantities) {
+          const parsedQuantities = JSON.parse(storedQuantities);
+          setQuantities(parsedQuantities);
+        }
+      } catch (error) {
+        console.error('Error loading cart data:', error);
+      }
+    };
+
+    // loadCartData();
+    // addQuantitiesToSelectedItems();
   }, []);
 
-  const addQuantitiesToSelectedItems = () => {
-    const updatedItems = selectedItems.map((item, index) => ({
-      ...item,
-      quantity: quantities[index] || 0, // You can adjust the logic for quantities calculation
-    }));
-    console.log('updated items ', updatedItems);
-    setItemsWithQuantities(updatedItems);
-    // console.log('items with quantity', itemsWithQuantities);
-  };
+  // const addQuantitiesToSelectedItems = () => {
+  //   const updatedItems = selectedItems.map((item, index) => ({
+  //     ...item,
+  //     quantity: quantities[index] || 0, // You can adjust the logic for quantities calculation
+  //   }));
+  //   console.log('updated items ', updatedItems);
+  //   setItemsWithQuantities(updatedItems);
+  //   // console.log('items with quantity', itemsWithQuantities);
+  // };
 
-  const saveCart = async () => {
-    await AsyncStorage.setItem('cart', JSON.stringify(itemsWithQuantities));
-    await AsyncStorage.setItem('amount', JSON.stringify(totalSum));
-  };
+  // const saveCart = async () => {
+  //   await AsyncStorage.setItem('cart', JSON.stringify(itemsWithQuantities));
+
+  // };
 
   const handleMinusPress = async index => {
     if (quantities[index] > 1) {
       const updatedQuantities = [...quantities];
       updatedQuantities[index] -= 1;
-      await setQuantities(updatedQuantities);
-      addQuantitiesToSelectedItems();
-      saveCart();
+      setQuantities(updatedQuantities);
+      // addQuantitiesToSelectedItems();
+      await saveCart(updatedQuantities);
     }
   };
 
   const handlePlusPress = async index => {
     const updatedQuantities = [...quantities];
     updatedQuantities[index] += 1;
-    await setQuantities(updatedQuantities);
-    addQuantitiesToSelectedItems();
-    saveCart();
+    setQuantities(updatedQuantities);
+    // addQuantitiesToSelectedItems();
+    await saveCart(updatedQuantities);
+  };
+
+  const saveCart = async updatedQuantities => {
+    try {
+      // Update itemsWithQuantities state based on updatedQuantities
+      const updatedItems = selectedItems.map((item, index) => ({
+        ...item,
+        quantity: updatedQuantities[index] || 0,
+      }));
+      setItemsWithQuantities(updatedItems);
+
+      // Save updated quantities to AsyncStorage
+    } catch (error) {
+      console.error('Error saving cart data:', error);
+    }
   };
 
   // Calculate the individual sum of each item
@@ -139,8 +168,13 @@ const Cart = ({route, navigation}) => {
           bg={colors.primary}
           my={5}
           _text={{fontSize: 20}}
-          onPress={() => {
-            saveCart();
+          onPress={async () => {
+            // saveCart();
+            await AsyncStorage.setItem(
+              'cart',
+              JSON.stringify(itemsWithQuantities),
+            );
+            await AsyncStorage.setItem('amount', JSON.stringify(totalSum));
             navigation.navigate('Post Order');
           }}>
           Checkout

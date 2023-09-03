@@ -22,8 +22,8 @@ const Nav = ({navigation}) => {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
-        <Stack.Screen
+      <Stack.Navigator initialRouteName="Tab">
+        {/* <Stack.Screen
           name="Welocme"
           component={Welcome}
           options={{
@@ -43,7 +43,7 @@ const Nav = ({navigation}) => {
           options={{
             headerShown: false,
           }}
-        />
+        /> */}
         <Stack.Screen
           name="Tab"
           component={TabNav}

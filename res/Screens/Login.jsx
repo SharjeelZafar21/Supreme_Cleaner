@@ -22,6 +22,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {Alert} from 'react-native';
 import {useMutation} from '@apollo/client';
 import {gql} from 'graphql-tag';
+import {actionTypes} from '../Redux/Action-type';
 
 const Login = ({navigation}) => {
   const LOGIN_MUTATION = gql`
@@ -40,6 +41,7 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState();
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
+  const dispatch = useDispatch();
 
   const [login, {loading, error}] = useMutation(LOGIN_MUTATION);
   console.log('error in Login', error);
@@ -75,8 +77,8 @@ const Login = ({navigation}) => {
         await AsyncStorage.setItem('userId', data.login.user.id);
         await AsyncStorage.setItem('userEmail', data.login.user.email);
         await AsyncStorage.setItem('jwt', data.login.jwt);
+        await dispatch({type: actionTypes.TOKEN, payload: data.login.jwt});
         console.log('login');
-        navigation.navigate('Tab');
       } catch (error) {
         console.log(error);
       }
@@ -171,6 +173,8 @@ const Login = ({navigation}) => {
               </Link>
             </Stack>
           </FormControl>
+          {loading && <Text>Loading...</Text>}
+          {error && <Text>{error}</Text>}
           <Button
             onPress={handleSignIn}
             endIcon={
@@ -184,7 +188,6 @@ const Login = ({navigation}) => {
             my={8}>
             Sign in
           </Button>
-          {error && <Text>{error}</Text>}
         </Box>
       </ScrollView>
     </Box>

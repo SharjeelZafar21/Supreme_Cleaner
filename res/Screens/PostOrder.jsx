@@ -245,11 +245,14 @@ const PostOrder = ({navigation}) => {
   const loadCart = async () => {
     const cartData = await AsyncStorage.getItem('cart');
     const totalPrice = await AsyncStorage.getItem('amount');
+    const userEmail = await AsyncStorage.getItem('userEmail');
     const parsedCartData = JSON.parse(cartData);
     setCartItems(parsedCartData);
     setTotalPrice(totalPrice);
+    setEmail(userEmail);
     console.log('cart in storage', cartData);
     console.log('amount', totalPrice);
+    console.log('userEmail', userEmail);
   };
 
   const itemStrings = cartItems.map(item => {
@@ -292,7 +295,7 @@ const PostOrder = ({navigation}) => {
                   {NameError}
                 </FormControl.HelperText>
               ) : null}
-              <FormControl.Label
+              {/* <FormControl.Label
                 marginTop={5}
                 _text={{fontSize: 'xl', fontWeight: 'light'}}>
                 Email
@@ -315,7 +318,7 @@ const PostOrder = ({navigation}) => {
                   _text={{color: colors.red}}>
                   {emailError}
                 </FormControl.HelperText>
-              ) : null}
+              ) : null} */}
               <FormControl.Label
                 marginTop={5}
                 _text={{fontSize: 'xl', fontWeight: 'light'}}>
