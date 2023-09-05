@@ -13,7 +13,6 @@ import CustomHeader from '../Components/CustomHeader';
 const TabNav = () => {
   const Tab = createMaterialBottomTabNavigator();
   return (
-    // <NavigationContainer>
     <Tab.Navigator
       initialRouteName="Home"
       barStyle={{backgroundColor: colors.white}}
@@ -58,7 +57,6 @@ const TabNav = () => {
         }}
       />
     </Tab.Navigator>
-    // </NavigationContainer>
   );
 };
 

@@ -136,9 +136,9 @@ const HelpFeedback = () => {
             </FormControl>
           </Box>
           <Button
-            onPress={() => {
-              navigation.navigate('Tab');
-            }}
+            // onPress={() => {
+            //   navigation.navigate('Tab');
+            // }}
             _text={{fontSize: 'lg'}}
             shadow={5}
             backgroundColor={colors.darkgrey}

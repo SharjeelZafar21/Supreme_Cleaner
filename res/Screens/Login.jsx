@@ -59,8 +59,6 @@ const Login = ({navigation}) => {
   const validatePassword = () => {
     if (!password) {
       setPasswordError('Password is required');
-    } else if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters');
     } else {
       setPasswordError('');
     }
@@ -124,12 +122,13 @@ const Login = ({navigation}) => {
                 Email
               </FormControl.Label>
               <Input
+                keyboardType="email-address"
                 focusOutlineColor={colors.white}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
                 borderLeftWidth={0}
-                type="text"
+                // type="text"
                 fontSize="lg"
                 value={email}
                 onChangeText={text => setEmail(text)}

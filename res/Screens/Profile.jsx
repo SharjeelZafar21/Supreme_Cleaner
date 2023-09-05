@@ -25,7 +25,7 @@ const Profile = ({navigation}) => {
   useEffect(() => {
     dispatch(LoginAction());
     getEmailFromStorage();
-  }, [foundUser]);
+  }, [foundUser, userData]);
   const logOut = async () => {
     await AsyncStorage.removeItem('userEmail');
     await dispatch({type: actionTypes.TOKEN, payload: null});

@@ -29,9 +29,9 @@ const Home = ({navigation}) => {
     setFoundUser(findUser);
   };
   useEffect(() => {
-    LoginAction();
+    dispatch(LoginAction());
     getEmailFromStorage();
-  }, [foundUser]);
+  }, [foundUser, userData]);
   return (
     <Box backgroundColor={colors.white} h="100%" w="100%">
       <ScrollView h="100%">

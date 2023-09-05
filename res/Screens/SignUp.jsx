@@ -27,6 +27,7 @@ const SignUp = ({navigation}) => {
   const [confirmpassword, setConfirmPassword] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [isLoading, setLoading] = useState(false);
 
   const [firstNameError, setFirstNameError] = useState();
   const [lastNameError, setLastNameError] = useState();
@@ -107,8 +108,10 @@ const SignUp = ({navigation}) => {
       !confirmpasswordError
     ) {
       // Perform sign-up logic
+      setLoading(true);
       await dispatch(SignUpAction(data));
       navigation.navigate('Login');
+      setLoading(false);
     }
   };
   const handleBack = () => {
@@ -198,6 +201,7 @@ const SignUp = ({navigation}) => {
                 Email
               </FormControl.Label>
               <Input
+                keyboardType="email-address"
                 focusOutlineColor={colors.white}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
@@ -316,6 +320,8 @@ const SignUp = ({navigation}) => {
             </Stack>
           </FormControl>
           <Button
+            isLoading={isLoading}
+            isLoadingText="Submitting"
             onPress={handleSignUp}
             endIcon={
               <Icons name="arrow-forward" color={colors.white} size={25} />
