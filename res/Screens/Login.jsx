@@ -75,8 +75,10 @@ const Login = ({navigation}) => {
         await AsyncStorage.setItem('userId', data.login.user.id);
         await AsyncStorage.setItem('userEmail', data.login.user.email);
         await AsyncStorage.setItem('jwt', data.login.jwt);
+        // await AsyncStorage.setItem('username', data.login.user.username);
         await dispatch({type: actionTypes.TOKEN, payload: data.login.jwt});
         console.log('login');
+        console.log('login', data);
       } catch (error) {
         console.log(error);
       }
@@ -123,7 +125,7 @@ const Login = ({navigation}) => {
               </FormControl.Label>
               <Input
                 keyboardType="email-address"
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -147,7 +149,7 @@ const Login = ({navigation}) => {
                 Password
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}

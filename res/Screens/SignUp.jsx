@@ -153,7 +153,7 @@ const SignUp = ({navigation}) => {
                 Name
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -177,7 +177,7 @@ const SignUp = ({navigation}) => {
                 username
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -202,7 +202,7 @@ const SignUp = ({navigation}) => {
               </FormControl.Label>
               <Input
                 keyboardType="email-address"
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -226,7 +226,7 @@ const SignUp = ({navigation}) => {
                 Create Password
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -250,7 +250,7 @@ const SignUp = ({navigation}) => {
                 Confirm Password
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}

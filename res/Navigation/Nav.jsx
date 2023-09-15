@@ -8,6 +8,10 @@ import Price from '../Screens/Price';
 import HelpFeedback from '../Screens/HelpFeedback';
 import Cart from '../Screens/Cart';
 import PostOrder from '../Screens/PostOrder';
+import PaymentInfo from '../Screens/PaymentInfo';
+import PersonalInfo from '../Screens/PersonalInfo';
+import Preferences from '../Screens/Preferences';
+import Logo from '../Components/Logo';
 
 const Nav = ({navigation}) => {
   const Stack = createNativeStackNavigator();
@@ -18,24 +22,30 @@ const Nav = ({navigation}) => {
           name="Tab"
           component={TabNav}
           options={{
-            headerBackVisible: false,
-            headerTitle: () => <CustomHeader />,
+            headerTitle: '',
+            // headerBackVisible: true,
+            headerLeft: () => <Logo />,
+            headerRight: () => <CustomHeader />,
           }}
         />
         <Stack.Screen
           name="Price"
           component={Price}
           options={{
-            headerBackVisible: false,
-            headerTitle: () => <CustomHeader />,
+            headerTitle: '',
+            headerBackVisible: true,
+            headerLeft: () => <Logo />,
+            headerRight: () => <CustomHeader />,
           }}
         />
         <Stack.Screen
           name="DryClean"
           component={DryClean}
           options={{
-            headerBackVisible: false,
-            headerTitle: () => <CustomHeader />,
+            headerTitle: '',
+            headerBackVisible: true,
+            headerLeft: () => <Logo />,
+            headerRight: () => <CustomHeader />,
           }}
         />
         <Stack.Screen
@@ -59,6 +69,30 @@ const Nav = ({navigation}) => {
           component={PostOrder}
           options={{
             title: 'Order Post',
+            // headerTitle: () => <CustomHeader />,
+          }}
+        />
+        <Stack.Screen
+          name="PaymentInfo"
+          component={PaymentInfo}
+          options={{
+            title: 'Payment Info',
+            // headerTitle: () => <CustomHeader />,
+          }}
+        />
+        <Stack.Screen
+          name="PersonalInfo"
+          component={PersonalInfo}
+          options={{
+            title: 'Personal Info',
+            // headerTitle: () => <CustomHeader />,
+          }}
+        />
+        <Stack.Screen
+          name="Preferences"
+          component={Preferences}
+          options={{
+            title: 'Preferences',
             // headerTitle: () => <CustomHeader />,
           }}
         />

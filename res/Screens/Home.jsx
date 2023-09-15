@@ -17,26 +17,24 @@ import {LoginAction, ordersAction} from '../Redux/Actions';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const Home = ({navigation}) => {
-  const dispatch = useDispatch();
-  const userData = useSelector(state => state.userStatus.user);
-  const [foundUser, setFoundUser] = useState([]);
+  // const dispatch = useDispatch();
+  // const userData = useSelector(state => state.userStatus.user);
+  // const [foundUser, setFoundUser] = useState();
 
-  const getEmailFromStorage = async () => {
-    const email = await AsyncStorage.getItem('userEmail');
-    console.log('async email', email);
-    const findUser = await userData.filter(user => user.email === email);
-    console.log('found user i home', findUser);
-    setFoundUser(findUser);
-  };
-  useEffect(() => {
-    dispatch(LoginAction());
-    getEmailFromStorage();
-  }, [foundUser, userData]);
+  // const getEmailFromStorage = async () => {
+  //   const username = await AsyncStorage.getItem('username');
+  //   console.log('username', username);
+  //   setFoundUser(username);
+  // };
+  // useEffect(() => {
+  //   dispatch(LoginAction());
+  //   getEmailFromStorage();
+  // }, []);
   return (
     <Box backgroundColor={colors.white} h="100%" w="100%">
       <ScrollView h="100%">
         <Box m={5}>
-          <Heading fontSize="4xl">Welcome {foundUser[0]?.username},</Heading>
+          <Heading fontSize="4xl">Welcome</Heading>
           <Text fontSize="lg" color={colors.darkgrey}>
             What can we do for you today?
           </Text>
@@ -66,9 +64,9 @@ const Home = ({navigation}) => {
               </Text>
             </Box>
             <Button
-              // onPress={() => {
-              //   navigation.navigate('Tab');
-              // }}
+              onPress={() => {
+                navigation.navigate('Bookings');
+              }}
               endIcon={
                 <Icons name="arrow-forward" color={colors.white} size={20} />
               }

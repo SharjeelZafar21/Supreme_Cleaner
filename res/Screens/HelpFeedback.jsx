@@ -45,7 +45,7 @@ const HelpFeedback = () => {
         <HStack my={2}>
           <Icons name="call-outline" color={colors.primary} size={30} />
           <Text fontSize="lg" alignSelf="center" mx={6}>
-            Call +44 (0)20 8004 2630
+            Call +27 11 825 6507
           </Text>
         </HStack>
         <Box bgColor={colors.body} borderRadius={6} my={4}>
@@ -64,7 +64,7 @@ const HelpFeedback = () => {
                 Name
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.body}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -83,7 +83,7 @@ const HelpFeedback = () => {
                 Email
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.body}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -102,7 +102,7 @@ const HelpFeedback = () => {
                 Phone number
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.body}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -123,7 +123,7 @@ const HelpFeedback = () => {
               <Input
                 h={20}
                 borderRadius={10}
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.body}
                 type="text"
                 fontSize="lg"

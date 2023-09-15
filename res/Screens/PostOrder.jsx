@@ -151,7 +151,7 @@ const PostOrder = ({navigation}) => {
 
   const validatePassword = () => {
     if (!cellPhone) {
-      setPasswordError('Password is required');
+      setPasswordError('Cell Phone is required');
     } else {
       setPasswordError('');
     }
@@ -277,7 +277,7 @@ const PostOrder = ({navigation}) => {
                 Name
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -301,7 +301,7 @@ const PostOrder = ({navigation}) => {
                 Email
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -326,7 +326,7 @@ const PostOrder = ({navigation}) => {
               </FormControl.Label>
               <Input
                 keyboardType="number-pad"
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -351,7 +351,7 @@ const PostOrder = ({navigation}) => {
               </FormControl.Label>
               <Input
                 keyboardType="number-pad"
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -375,7 +375,7 @@ const PostOrder = ({navigation}) => {
                 Adress
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -399,7 +399,7 @@ const PostOrder = ({navigation}) => {
                 City
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -423,7 +423,7 @@ const PostOrder = ({navigation}) => {
                 Post Code
               </FormControl.Label>
               <Input
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 backgroundColor={colors.white}
                 borderTopWidth={0}
                 borderRightWidth={0}
@@ -449,7 +449,7 @@ const PostOrder = ({navigation}) => {
               <Input
                 h={20}
                 borderRadius={10}
-                focusOutlineColor={colors.white}
+                focusOutlineColor={colors.darkgrey}
                 _focus={{bgColor: colors.white}}
                 value={note}
                 onChangeText={text => setNote(text)}
