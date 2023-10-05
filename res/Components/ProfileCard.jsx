@@ -6,7 +6,7 @@ import colors from '../Assets/colors';
 const ProfileCard = ({iconName, title, onPress}) => {
   return (
     <Pressable onPress={onPress}>
-      <HStack my={4} w="70%" justifyContent="space-around">
+      <HStack my={4} w="80%" justifyContent="space-between">
         <Icons name={iconName} color={colors.primary} size={35} />
         <Text w="80%" fontSize="xl">
           {title}

@@ -40,6 +40,7 @@ const Cart = ({route, navigation}) => {
 
     // loadCartData();
     // addQuantitiesToSelectedItems();
+    saveCart(quantities);
   }, []);
 
   // const addQuantitiesToSelectedItems = () => {
@@ -169,7 +170,7 @@ const Cart = ({route, navigation}) => {
           my={5}
           _text={{fontSize: 20}}
           onPress={async () => {
-            // saveCart();
+            // await saveCart();
             await AsyncStorage.setItem(
               'cart',
               JSON.stringify(itemsWithQuantities),

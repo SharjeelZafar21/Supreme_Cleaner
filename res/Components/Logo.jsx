@@ -4,9 +4,10 @@ import React from 'react';
 const Logo = () => {
   return (
     <Image
-      source={require('../Assets/Logo.png')}
+      source={require('../Assets/Logo1.jpg')}
       size="sm"
-      resizeMode="contain"
+      w="48"
+      // resizeMode="stretch"
       alt="logo"
     />
   );

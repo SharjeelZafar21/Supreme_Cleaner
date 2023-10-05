@@ -11,9 +11,9 @@ const BasePriceGuide = ({
 }) => {
   return (
     <Box marginTop="20px" key={key}>
-      <HStack justifyContent="space-around">
-        <Heading w="75%">{title}</Heading>
-        <Text fontSize="lg" w="20%">
+      <HStack w="90%" alignSelf="center" justifyContent="space-between">
+        <Heading w="80%">{title}</Heading>
+        <Text fontSize="lg" mx={6}>
           From
         </Text>
       </HStack>

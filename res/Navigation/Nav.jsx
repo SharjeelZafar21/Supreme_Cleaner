@@ -12,6 +12,7 @@ import PaymentInfo from '../Screens/PaymentInfo';
 import PersonalInfo from '../Screens/PersonalInfo';
 import Preferences from '../Screens/Preferences';
 import Logo from '../Components/Logo';
+import Bookings from '../Screens/Bookings';
 
 const Nav = ({navigation}) => {
   const Stack = createNativeStackNavigator();
@@ -22,30 +23,33 @@ const Nav = ({navigation}) => {
           name="Tab"
           component={TabNav}
           options={{
-            headerTitle: '',
+            headerTitle: () => <Logo />,
+            headerTitleAlign: 'center',
             // headerBackVisible: true,
-            headerLeft: () => <Logo />,
-            headerRight: () => <CustomHeader />,
+            // headerLeft: () => <Logo />,
+            // headerRight: () => <CustomHeader />,
           }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Price"
           component={Price}
           options={{
-            headerTitle: '',
+            headerTitle: () => <Logo />,
+            headerTitleAlign: 'center',
             headerBackVisible: true,
-            headerLeft: () => <Logo />,
-            headerRight: () => <CustomHeader />,
+            // headerLeft: () => <Logo />,
+            // headerRight: () => <CustomHeader />,
           }}
-        />
+        /> */}
         <Stack.Screen
           name="DryClean"
           component={DryClean}
           options={{
-            headerTitle: '',
-            headerBackVisible: true,
-            headerLeft: () => <Logo />,
-            headerRight: () => <CustomHeader />,
+            headerTitle: () => <Logo />,
+            headerTitleAlign: 'center',
+            // headerBackVisible: true,
+            // headerLeft: () => <Logo />,
+            // headerRight: () => <CustomHeader />,
           }}
         />
         <Stack.Screen
@@ -95,6 +99,14 @@ const Nav = ({navigation}) => {
             title: 'Preferences',
             // headerTitle: () => <CustomHeader />,
           }}
+        />
+        <Stack.Screen
+          name="Bookings"
+          component={Bookings}
+          // options={{
+          //   title: 'Preferences',
+          //   headerTitle: () => <CustomHeader />,
+          // }}
         />
       </Stack.Navigator>
     </NavigationContainer>

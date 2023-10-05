@@ -9,6 +9,7 @@ import Profile from '../Screens/Profile';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import colors from '../Assets/colors';
 import CustomHeader from '../Components/CustomHeader';
+import Price from '../Screens/Price';
 
 const TabNav = () => {
   const Tab = createMaterialBottomTabNavigator();
@@ -38,8 +39,8 @@ const TabNav = () => {
         }}
       />
       <Tab.Screen
-        name="Bookings"
-        component={Bookings}
+        name="Services"
+        component={Price}
         options={{
           tabBarIcon: ({color}) => (
             <FontAwesome name="truck-outline" color={color} size={25} />

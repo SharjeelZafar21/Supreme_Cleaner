@@ -17,21 +17,25 @@ const BaseCard = ({title, image_url, onPress, description, key}) => {
       key={key}
       borderRadius={10}
       onPress={onPress}
-      marginTop={5}
-      h={450}
+      margin={2.5}
+      // h="sm"
       w="95%"
       alignSelf="center"
       backgroundColor="white">
       <Image
-        borderTopRadius={10}
+        borderTopRadius={12}
         alignSelf="center"
-        height="60%"
+        height="xs"
         w="100%"
         source={{uri: image_url}}
         alt="Image"
       />
-      <Heading margin="15px">{title}</Heading>
-      <Text marginLeft="20px" marginRight="10px" fontSize="lg">
+      <Heading margin="10px">{title}</Heading>
+      <Text
+        marginLeft="10px"
+        marginRight="10px"
+        marginBottom="10px"
+        fontSize="lg">
         {description}
       </Text>
     </Pressable>

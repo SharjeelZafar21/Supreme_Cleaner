@@ -94,9 +94,11 @@ const CurrentOrders = () => {
           />
         }>
         {pendingOrders.length === 0 ? (
-          <Heading w="50%" textAlign="center" alignSelf="center">
-            You don't have any current orders yet
-          </Heading>
+          <Box justifyContent="center" h="xl">
+            <Heading w="50%" textAlign="center" alignSelf="center">
+              You don't have any current orders yet
+            </Heading>
+          </Box>
         ) : (
           <Table>
             <Row
